@@ -10,6 +10,10 @@
     "start": "cd src/ && nodemon server.js"
   },
   "devDependencies": {
+    "dotenv": "^17.4.2",
     "nodemon": "^3.1.14"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
   }
 }
