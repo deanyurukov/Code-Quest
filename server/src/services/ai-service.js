@@ -1,3 +1,5 @@
+import Question from "../models/question.js";
+
 const url = process.env.AI_URL;
 
 export async function getAIResponse() {
@@ -29,8 +31,20 @@ export async function getAIResponse() {
         const apiResponseText = data.candidates[0].content.parts[0].text;
         const obj = JSON.parse(apiResponseText);
 
+        try {
+            await Question.create({
+                date: new Date().toISOString().split("T")[0],
+                question: obj.question,
+                answers: obj.answers,
+                correctAnswerIndex: obj.correctAnswerIndex
+            });
+        } catch (error) {
+            throw new Error(error);
+        }
+
         return obj;
     } catch (error) {
-        throw new Error(error.message);
+        console.error("Error:", error.message);
+        throw new Error("Error fetching AI response");
     }
 }
