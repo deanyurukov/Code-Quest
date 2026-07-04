@@ -1,12 +1,8 @@
 import express from "express";
-import path from 'path';
-import { fileURLToPath } from 'url';
 import './config.js';
-import { getQuestion } from "./services/question-service.js";
 import mongoose from "mongoose";
-
-import Question from "./models/question.js";
-import { getAIResponse } from "./services/ai-service.js";
+import questionRoutes from "./routes/question-routes.js";
+import adminRoutes from "./routes/admin-routes.js";
 
 const app = express();
 const allowedOrigins = ["http://localhost:3000", "http://192.168.1.6:3000"];
@@ -44,20 +40,13 @@ app.use((req, res, next) => {
     next();
 });
 
-app.get("/question/get", async (req, res) => {
-    const response = await getQuestion();
-    res.json(response);
-});
-
-app.get("/admin/question/get", async (req, res) => {
-    const response = await getAIResponse();
-    res.json(response);
-});
+app.use(questionRoutes);
+app.use(adminRoutes);
 
 app.use((req, res) => {
     res.status(404).send("Route not found");
 });
 
 app.listen(port, () => {
-    console.log(`Server is running on port ${port}.`);
+    console.log(`Server is running on http://localhost:${port}.`);
 });
