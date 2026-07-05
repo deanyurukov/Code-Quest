@@ -3,7 +3,7 @@ import { getAIResponse } from "../services/ai-service.js";
 import Question from "../models/question.js";
 
 cron.schedule(
-    "0 0 * * *",
+    "01 0 * * *",
     async () => {
         console.log("Generating today's question...");
         await getAIResponse();
