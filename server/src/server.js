@@ -3,6 +3,7 @@ import './config.js';
 import mongoose from "mongoose";
 import questionRoutes from "./routes/question-routes.js";
 import adminRoutes from "./routes/admin-routes.js";
+import './cron/daily-question-cron.js';
 
 const app = express();
 const allowedOrigins = ["http://localhost:3000", "http://192.168.1.6:3000"];

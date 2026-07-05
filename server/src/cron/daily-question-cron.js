@@ -5,8 +5,9 @@ import Question from "../models/question.js";
 cron.schedule(
     "0 0 * * *",
     async () => {
-        console.log("Generating tomorrow's question...");
+        console.log("Generating today's question...");
         await getAIResponse();
+        console.log("Today's question was generated and saved to the database.");
     },
     {
         timezone: "Europe/Sofia",
