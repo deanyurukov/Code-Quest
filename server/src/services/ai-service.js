@@ -1,4 +1,5 @@
 import Question from "../models/question.js";
+import { getSofiaDateString } from "./date-service.js";
 
 const url = process.env.AI_URL;
 
@@ -33,7 +34,7 @@ export async function getAIResponse() {
 
         try {
             await Question.create({
-                date: new Date().toISOString().split("T")[0],
+                date: getSofiaDateString(),
                 question: obj.question,
                 answers: obj.answers,
                 correctAnswerIndex: obj.correctAnswerIndex
