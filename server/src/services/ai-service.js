@@ -16,7 +16,7 @@ export async function getAIResponse() {
                         role: "user",
                         parts: [
                             {
-                                text: "Generate one multiple-choice question about programming or computer science. The topic can vary widely and may cover programming languages, algorithms, data structures, databases, software engineering, web development, networking, operating systems, security, or general computer science concepts. The difficulty can range from beginner to advanced. Return ONLY a valid JSON object with exactly this structure: {'question':'string','answers':['string','string','string','string'],'correctAnswerIndex':0}. Do NOT wrap the response in Markdown, do NOT include explanations or any text outside the JSON, do NOT include code snippets, newline characters (\\n), HTML, Markdown, backticks, or escaped formatting. The 'question' must be a single plain-text sentence, all values must be plain strings, and 'correctAnswerIndex' must be an integer from 0 to 3."
+                                text: "Generate one multiple-choice question about programming or computer science. The topic can vary widely and may cover programming languages, algorithms, data structures, databases, software engineering, web development, networking, operating systems, security, or general computer science concepts. The difficulty can be beginner, intermediate, or advanced. Return ONLY a valid JSON object with exactly this structure: {'question':'string','answers':['string','string','string','string'],'correctAnswerIndex':0, 'topic':'string', 'difficulty':'string'}. Do NOT wrap the response in Markdown, do NOT include explanations or any text outside the JSON, do NOT include code snippets, newline characters (\\n), HTML, Markdown, backticks, or escaped formatting. The 'question', 'topic', and 'difficulty' must be a single plain-text sentence / word, all values must be plain strings, and 'correctAnswerIndex' must be an integer from 0 to 3."
                             }
                         ]
                     }
@@ -37,7 +37,9 @@ export async function getAIResponse() {
                 date: getSofiaDateString(),
                 question: obj.question,
                 answers: obj.answers,
-                correctAnswerIndex: obj.correctAnswerIndex
+                correctAnswerIndex: obj.correctAnswerIndex,
+                topic: obj.topic,
+                difficulty: obj.difficulty
             });
         } catch (error) {
             throw new Error(error);

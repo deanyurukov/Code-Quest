@@ -8,6 +8,8 @@ const questionSchema = new Schema(
         },
         question: String,
         answers: [String],
+        topic: String,
+        difficulty: String,
         correctAnswerIndex: Number
     },
     {
