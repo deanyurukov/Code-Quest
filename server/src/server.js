@@ -21,6 +21,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 const port = process.env.PORT || 5001;
+export const LAUNCH_DATE = new Date("2026-07-04");
 
 app.use((req, res, next) => {
     const origin = req.headers.origin;
