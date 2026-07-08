@@ -17,6 +17,7 @@ function App() {
 
     const [question, setQuestion] = useState<Question | null>(null);
     const letters: string[] = ["A", "B", "C", "D"];
+    const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
 
     async function getQuestion(): Promise<void> {
         const data = await get<Question>(endpoints.today);
@@ -67,15 +68,15 @@ function App() {
 
                 <h3>{question?.question}</h3>
 
-                <section>
+                <section className="answers">
                     {
                         question?.answers.map((answer, i) => (
-                            <Answer key={i} answer={answer} letter={letters[i]} />
+                            <Answer key={i} answer={answer} letter={letters[i]} selected={selectedAnswer} setSelected={setSelectedAnswer} index={i} />
                         ))
                     }
                 </section>
 
-                <button type="submit">Submit Answer</button>
+                <button type="submit" disabled={selectedAnswer === null}>Submit Answer</button>
             </main>
         </>
     );

@@ -31,7 +31,7 @@ button {
 body {
     background: var(--color-bg);
     width: 100%;
-    padding-top: 3rem;
+    padding: 3rem 0;
 }
 
 #root {
@@ -104,7 +104,7 @@ header {
             }
         }
 
-        span {
+        button span {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -120,7 +120,7 @@ header {
             }
 
             &:active {
-                scale: 0.9;
+                scale: 0.95;
             }
         }
     }
@@ -175,6 +175,102 @@ main {
 
             span {
                 margin-right: 0.45rem;
+            }
+        }
+    }
+
+    h3,
+    .answers span,
+    button {
+        font-family: var(--font-nunito);
+    }
+
+    h3 {
+        color: rgb(28, 18, 8);
+        font-weight: 700;
+        font-size: 1.4rem;
+    }
+
+    .answers {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+
+        article {
+            background: var(--color-white);
+            border: 2px solid rgba(217, 119, 6, 0.18);
+            border-radius: var(--border-r);
+            color: rgb(28, 18, 8);
+            box-shadow: rgba(0, 0, 0, 0.04) 0px 1px 4px;
+            cursor: pointer;
+            padding: 0.8em 1rem;
+            transform: none;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+
+            &:hover {
+                transform: translateY(-2px);
+                box-shadow: rgba(217, 119, 6, 0.15) 0px 6px 20px;
+            }
+
+            &.selected {
+                background: rgb(254, 249, 238);
+                border: 2px solid rgb(217, 119, 6);
+                box-shadow: rgba(217, 119, 6, 0.15) 0px 0px 0px 3px, rgba(217, 119, 6, 0.18) 0px 4px 16px;
+
+                span {
+                    background: rgb(217, 119, 6);
+                    color: var(--color-white);
+                }
+            }
+
+            span {
+                background: rgb(254, 249, 238);
+                color: rgb(180, 83, 9);
+                border-radius: 100%;
+                font-size: 0.75rem;
+                font-weight: 900;
+                padding: 0.5rem;
+                width: 2rem;
+                text-align: center;
+            }
+
+            p {
+                font-weight: 500;
+                font-family: var(--font-inter);
+            }
+        }
+    }
+
+    button {
+        background: linear-gradient(135deg, rgb(180, 83, 9), rgb(217, 119, 6), rgb(245, 158, 11));
+        color: var(--color-white);
+        box-shadow: rgba(217, 119, 6, 0.4) 0px 8px 24px, rgba(217, 119, 6, 0.2) 0px 2px 6px;
+        cursor: pointer;
+        opacity: 1;
+        font-weight: 900;
+        font-size: 1rem;
+        padding: 1rem 0;
+        border-radius: var(--border-r);
+
+        &:hover {
+            scale: 1.02;
+        }
+
+        &:disabled {
+            background: rgb(245, 245, 240);
+            border: 1.5px solid rgb(229, 224, 216);
+            color: rgb(196, 186, 168);
+            box-shadow: none;
+            cursor: not-allowed;
+
+            &:hover {
+                scale: 1;
+            }
+
+            &:active {
+                scale: 1;
             }
         }
     }
