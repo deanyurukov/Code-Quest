@@ -196,6 +196,15 @@ main {
         flex-direction: column;
         gap: 0.8rem;
 
+        &.submitted-container article {
+            cursor: default;
+
+            &:hover {
+                transform: none;
+                box-shadow: none;
+            }
+        }
+
         article {
             background: var(--color-white);
             border: 2px solid rgba(217, 119, 6, 0.18);
@@ -222,6 +231,30 @@ main {
                 span {
                     background: rgb(217, 119, 6);
                     color: var(--color-white);
+                }
+
+                &.correct {
+                    background: linear-gradient(135deg, rgb(240, 253, 244), rgb(220, 252, 231));
+                    border: 2px solid rgb(34, 197, 94);
+                    color: rgb(22, 101, 52);
+                    box-shadow: rgba(34, 197, 94, 0.15) 0px 0px 0px 3px, rgba(34, 197, 94, 0.15) 0px 4px 16px;
+
+                    span {
+                        background: rgb(34, 197, 94);
+                        color: var(--color-white);
+                    }
+                }
+
+                &.wrong {
+                    background: linear-gradient(135deg, rgb(254, 242, 242), rgb(254, 226, 226));
+                    border: 2px solid rgb(239, 68, 68);
+                    color: rgb(153, 27, 27);
+                    box-shadow: rgba(239, 68, 68, 0.12) 0px 0px 0px 3px;
+
+                    span {
+                        background: rgb(239, 68, 68);
+                        color: var(--color-white);
+                    }
                 }
             }
 

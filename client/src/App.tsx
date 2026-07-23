@@ -18,10 +18,16 @@ function App() {
     const [question, setQuestion] = useState<Question | null>(null);
     const letters: string[] = ["A", "B", "C", "D"];
     const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
+    const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
     async function getQuestion(): Promise<void> {
         const data = await get<Question>(endpoints.today);
         setQuestion(data);
+    }
+
+    function handleSubmit(e: any): void {
+        e.preventDefault();
+        setIsSubmitted(true);
     }
 
     useEffect(() => {
@@ -68,15 +74,15 @@ function App() {
 
                 <h3>{question?.question}</h3>
 
-                <section className="answers">
+                <section className={isSubmitted ? "answers submitted-container" : "answers"}>
                     {
                         question?.answers.map((answer, i) => (
-                            <Answer key={i} answer={answer} letter={letters[i]} selected={selectedAnswer} setSelected={setSelectedAnswer} index={i} />
+                            <Answer key={i} answer={answer} letter={letters[i]} selected={selectedAnswer} setSelected={setSelectedAnswer} index={i} correctIndex={question.correctAnswerIndex} isSubmitted={isSubmitted} />
                         ))
                     }
                 </section>
 
-                <button type="submit" disabled={selectedAnswer === null}>Submit Answer</button>
+                { !isSubmitted && <button disabled={selectedAnswer === null} onClick={handleSubmit}>Submit Answer</button> }
             </main>
         </>
     );
