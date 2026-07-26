@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { get } from "./api/requester";
-import { endpoints } from "./api/endpoints";
+import { get } from "./api/requester.ts";
+import { endpoints } from "./api/endpoints.ts";
 import Answer from "./components/Answer.js";
+import Spinner from "./components/Spinner.js";
 
 function App() {
     interface Question {
@@ -21,10 +22,20 @@ function App() {
     const letters: string[] = ["A", "B", "C", "D"];
     const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
     const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(false);
 
     async function getQuestion(): Promise<void> {
-        const data = await get<Question>(endpoints.today);
-        setQuestion(data);
+        try {
+            setLoading(true);
+            const data = await get<Question>(endpoints.today);
+            setQuestion(data);
+        }
+        catch (e) {
+            console.error(e);
+        }
+        finally {
+            setLoading(false);
+        }
     }
 
     async function getDiffQuestion(offset: number) {
@@ -33,10 +44,20 @@ function App() {
 
         const formattedDate = wantedDay.toISOString().split("T")[0];
 
-        const newQuestion = await get<Question>(endpoints.specific(formattedDate));
-        setQuestion(newQuestion);
-        setIsSubmitted(false);
-        setSelectedAnswer(null);
+        try {
+            setLoading(true);
+            const newQuestion = await get<Question>(endpoints.specific(formattedDate));
+            setQuestion(newQuestion);
+            setLoading(false);
+            setIsSubmitted(false);
+            setSelectedAnswer(null);
+        }
+        catch (e) {
+            console.error(e);
+        }
+        finally {
+            setLoading(false);
+        }
     }
 
     function handleSubmit(e: any): void {
@@ -62,7 +83,7 @@ function App() {
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" data-fg-d3bl34="0.8:0.125:node_modules/lucide-react:339:31:12390:35:e:ChevronLeft::::::O1c" data-fgid-d3bl34=":r11:"><path d="m15 18-6-6 6-6"></path></svg>
                         </span>
                     </button>
-                    <h2>Day {question?.dayNumber}</h2>
+                    <h2>Day {loading ? "..." : question?.dayNumber}</h2>
                     <button disabled={question?.nextExists === false} onClick={() => getDiffQuestion(1)} >
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" data-fg-d3bl35="0.8:0.125:node_modules/lucide-react:339:69:12428:36:e:ChevronRight::::::ByYJ" data-fgid-d3bl35=":r18:"><path d="m9 18 6-6-6-6"></path></svg>
@@ -71,33 +92,36 @@ function App() {
                 </section>
             </header>
 
-            <main>
-                <section className="question-info">
-                    <div>
-                        {question?.topic}
-                    </div>
-                    <div className={question?.difficulty}>
-                        <span>
-                            {question?.difficulty === "Beginner" && "🌱"}
-                            {question?.difficulty === "Intermediate" && "⚔️"}
-                            {question?.difficulty === "Advanced" && "💀"}
-                        </span>
-                        {question?.difficulty}
-                    </div>
-                </section>
+            {
+                loading ? <Spinner /> :
+                    <main>
+                        <section className="question-info">
+                            <div>
+                                {question?.topic}
+                            </div>
+                            <div className={question?.difficulty}>
+                                <span>
+                                    {question?.difficulty === "Beginner" && "🌱"}
+                                    {question?.difficulty === "Intermediate" && "⚔️"}
+                                    {question?.difficulty === "Advanced" && "💀"}
+                                </span>
+                                {question?.difficulty}
+                            </div>
+                        </section>
 
-                <h3>{question?.question}</h3>
+                        <h3>{question?.question}</h3>
 
-                <section className={isSubmitted ? "answers submitted-container" : "answers"}>
-                    {
-                        question?.answers.map((answer, i) => (
-                            <Answer key={i} answer={answer} letter={letters[i]} selected={selectedAnswer} setSelected={setSelectedAnswer} index={i} correctIndex={question.correctAnswerIndex} isSubmitted={isSubmitted} />
-                        ))
-                    }
-                </section>
+                        <section className={isSubmitted ? "answers submitted-container" : "answers"}>
+                            {
+                                question?.answers.map((answer, i) => (
+                                    <Answer key={i} answer={answer} letter={letters[i]} selected={selectedAnswer} setSelected={setSelectedAnswer} index={i} correctIndex={question.correctAnswerIndex} isSubmitted={isSubmitted} />
+                                ))
+                            }
+                        </section>
 
-                {!isSubmitted && <button disabled={selectedAnswer === null} onClick={handleSubmit}>Submit Answer</button>}
-            </main>
+                        {!isSubmitted && <button disabled={selectedAnswer === null} onClick={handleSubmit}>Submit Answer</button>}
+                    </main>
+            }
         </>
     );
 }

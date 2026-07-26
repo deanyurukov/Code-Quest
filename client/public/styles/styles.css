@@ -308,3 +308,31 @@ main {
         }
     }
 }
+
+.loader {
+    color: rgb(180, 83, 9);
+    font-family: Consolas, Menlo, Monaco, monospace;
+    font-weight: bold;
+    font-size: calc(78 * 1.5px);
+    opacity: 0.8;
+    margin-top: 5rem;
+
+    &:before {
+        content: '{';
+        display: inline-block;
+        animation: pulse 0.4s alternate infinite ease-in-out;
+    }
+
+    &:after {
+        content: '}';
+        display: inline-block;
+        animation: pulse 0.4s 0.3s alternate infinite ease-in-out;
+    }
+}
+
+@keyframes pulse {
+    to {
+        transform: scale(0.8);
+        opacity: 0.65;
+    }
+}
