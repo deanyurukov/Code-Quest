@@ -3,21 +3,10 @@ import { get } from "./api/requester.ts";
 import { endpoints } from "./api/endpoints.ts";
 import Answer from "./components/Answer.js";
 import Spinner from "./components/Spinner.js";
+import type { Question } from "./types/Question.ts";
+import type { SavedAnswer } from "./types/SavedAnswer.ts";
 
 function App() {
-    interface Question {
-        id: string;
-        date: string,
-        question: string,
-        answers: string[],
-        topic: string,
-        difficulty: string,
-        correctAnswerIndex: number,
-        dayNumber: number,
-        previousExists: boolean,
-        nextExists: boolean
-    }
-
     const [question, setQuestion] = useState<Question | null>(null);
     const letters: string[] = ["A", "B", "C", "D"];
     const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
@@ -29,6 +18,8 @@ function App() {
             setLoading(true);
             const data = await get<Question>(endpoints.today);
             setQuestion(data);
+
+            preSetAnswers(data);
         }
         catch (e) {
             console.error(e);
@@ -49,8 +40,8 @@ function App() {
             const newQuestion = await get<Question>(endpoints.specific(formattedDate));
             setQuestion(newQuestion);
             setLoading(false);
-            setIsSubmitted(false);
-            setSelectedAnswer(null);
+            
+            preSetAnswers(newQuestion);
         }
         catch (e) {
             console.error(e);
@@ -60,9 +51,28 @@ function App() {
         }
     }
 
+    function preSetAnswers(data: Question) {
+        const questionAnswered: SavedAnswer | undefined = JSON.parse(localStorage.getItem("answers") ?? "[]").find((q: SavedAnswer) => q.date! === data.date);
+
+        if (questionAnswered !== undefined) {
+            setIsSubmitted(true);
+            setSelectedAnswer(questionAnswered.selected);
+        }
+        else {
+            setIsSubmitted(false);
+            setSelectedAnswer(null);
+        }
+    }
+
     function handleSubmit(e: any): void {
         e.preventDefault();
         setIsSubmitted(true);
+        const saved: SavedAnswer[] = JSON.parse(localStorage.getItem("answers") ?? "[]");
+
+        if (saved.find(q => q.date === question?.date) === undefined) {
+            saved.push({ date: question?.date!, isCorrect: selectedAnswer === question?.correctAnswerIndex, selected: selectedAnswer! });
+            localStorage.setItem("answers", JSON.stringify(saved));
+        }
     }
 
     useEffect(() => {
