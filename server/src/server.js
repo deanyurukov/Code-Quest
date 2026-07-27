@@ -7,7 +7,7 @@ import './cron/daily-question-cron.js';
 
 const app = express();
 const allowedOrigins = ["http://localhost:3000", "http://192.168.1.6:3000"];
-const uri = process.env.URI_KEY;
+const uri = process.env.URI_KEY || "mongodb://0.0.0.0:27017/Code-Quest";
 
 try {
     await mongoose.connect(uri);
