@@ -6,7 +6,7 @@ import adminRoutes from "./routes/admin-routes.js";
 import './cron/daily-question-cron.js';
 
 const app = express();
-const allowedOrigins = ["http://localhost:3000", "http://192.168.1.6:3000"];
+const allowedOrigins = ["https://code-quest-daily.vercel.app/", "http://localhost:3000", "http://192.168.1.6:3000"];
 const uri = process.env.URI_KEY || "mongodb://0.0.0.0:27017/Code-Quest";
 
 try {
