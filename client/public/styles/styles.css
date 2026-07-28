@@ -23,6 +23,26 @@
     transition: all 0.1s linear;
 }
 
+html {
+    font-size: 16px;
+
+    @media (width<=700px) {
+        font-size: 14.5px;
+    }
+
+    @media (width<=600px) {
+        font-size: 13px;
+    }
+
+    @media (width<=450px) {
+        font-size: 11.5px;
+    }
+
+    @media (width<=380px) {
+        font-size: 10.5px;
+    }
+}
+
 button {
     border: none;
     background: transparent;
@@ -83,6 +103,10 @@ header {
         border-radius: var(--border-r);
         padding: 1.5rem 1rem;
 
+        @media (width<=700px) {
+            padding: 1rem 0.75rem;
+        }
+
         h2 {
             font-family: var(--font-nunito);
             font-size: 3rem;
@@ -122,6 +146,15 @@ header {
             &:active {
                 scale: 0.95;
             }
+
+            @media (width<=600px) {
+                padding: 7px;
+
+                svg {
+                    width: 20px;
+                    height: 20px;
+                }
+            }
         }
     }
 }
@@ -135,6 +168,10 @@ main {
     border-radius: var(--border-r);
     padding: 2rem 2.5rem;
     gap: 1rem;
+
+    @media (width<=700px) {
+        padding: 1.25rem 1.5rem;
+    }
 
     .question-info {
         display: flex;
@@ -266,7 +303,9 @@ main {
                 font-weight: 900;
                 padding: 0.5rem;
                 width: 2rem;
+                height: 2rem;
                 text-align: center;
+                aspect-ratio: 1 / 1 !important;
             }
 
             p {
@@ -327,6 +366,10 @@ main {
         content: '}';
         display: inline-block;
         animation: pulse 0.4s 0.3s alternate infinite ease-in-out;
+    }
+
+    @media (width<=450px) {
+        font-size: calc(78 * 1.2px);
     }
 }
 
