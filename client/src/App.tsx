@@ -64,7 +64,7 @@ function App() {
         }
     }
 
-    function handleSubmit(e: any): void {
+    async function handleSubmit(e: any): Promise<void> {
         e.preventDefault();
         setIsSubmitted(true);
         const saved: SavedAnswer[] = JSON.parse(localStorage.getItem("answers") ?? "[]");
@@ -73,6 +73,8 @@ function App() {
             saved.push({ date: question?.date!, isCorrect: selectedAnswer === question?.correctAnswerIndex, selected: selectedAnswer! });
             localStorage.setItem("answers", JSON.stringify(saved));
         }
+
+        await get(endpoints.submitSpecific(question?.date!));
     }
 
     useEffect(() => {
