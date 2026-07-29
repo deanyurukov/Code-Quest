@@ -1,2 +1,3 @@
 User-agent: *
 Allow: /
+Sitemap: https://code-quest-daily.vercel.app/sitemap.xml
