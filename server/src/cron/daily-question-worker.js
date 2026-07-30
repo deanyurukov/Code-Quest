@@ -4,7 +4,6 @@ import { getAIResponse } from "../services/ai-service.js";
 
 const uri = process.env.URI_KEY;
 
-// Force exit after 30 seconds to prevent hanging
 const timeout = setTimeout(() => {
     console.error("Worker timeout: Forcing exit after 30 seconds");
     process.exit(1);
