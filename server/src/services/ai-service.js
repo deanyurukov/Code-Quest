@@ -1,9 +1,12 @@
+import { getAllQuestions } from "../helpers/getAllQuestions.js";
 import Question from "../models/question.js";
 import { getSofiaDateString } from "./date-service.js";
 
 const url = process.env.AI_URL;
 
 export async function getAIResponse() {
+    const alreadyExisting = await getAllQuestions();
+
     try {
         const response = await fetch(url, {
             method: "POST",
@@ -16,7 +19,27 @@ export async function getAIResponse() {
                         role: "user",
                         parts: [
                             {
-                                text: "Generate one multiple-choice question about programming or computer science. The topic can vary widely and may cover programming languages, algorithms, data structures, databases, software engineering, web development, networking, operating systems, security, or general computer science concepts. They shall not be always data structures nor of intermediate or easy or hard difficulty! Do not ask what a Domain Name System (DNS) is! The difficulty can be beginner, intermediate, or advanced. Return ONLY a valid JSON object with exactly this structure: {'question':'string','answers':['string','string','string','string'],'correctAnswerIndex':0, 'topic':'string', 'difficulty':'string'}. Do NOT wrap the response in Markdown, do NOT include explanations or any text outside the JSON, do NOT include code snippets, newline characters (\\n), HTML, Markdown, backticks, or escaped formatting. The 'question', 'topic', and 'difficulty' must be a single plain-text sentence / word, all values must be plain strings, and 'correctAnswerIndex' must be an integer from 0 to 3."
+                                text: `
+                                    Generate one multiple-choice question about programming or computer science.
+
+                                    The topic can vary widely and may cover programming languages, algorithms, data structures, databases, software engineering, web development, networking, operating systems, security, or general computer science concepts.
+
+                                    They shall not be always data structures nor of intermediate or easy or hard difficulty!
+
+                                    The difficulty can be beginner, intermediate, or advanced.
+                                    
+                                    Return ONLY a valid JSON object with exactly this structure:
+                                        {
+                                            'question':'string',
+                                            'answers':['string','string','string','string'],
+                                            'correctAnswerIndex':0,
+                                            'topic':'string',
+                                            'difficulty':'string'
+                                        }.
+                                       
+                                    Do NOT wrap the response in Markdown, do NOT include explanations or any text outside the JSON, do NOT include code snippets, newline characters (\\n), HTML, Markdown, backticks, or escaped formatting. The 'question', 'topic', and 'difficulty' must be a single plain-text sentence / word, all values must be plain strings, and 'correctAnswerIndex' must be an integer from 0 to 3.
+                                    
+                                    The question should NOT be of one of the following as they already exist: ${alreadyExisting.join(", ")}.`
                             }
                         ]
                     }
@@ -41,12 +64,14 @@ export async function getAIResponse() {
                 topic: obj.topic,
                 difficulty: obj.difficulty
             });
-        } catch (error) {
+        } 
+        catch (error) {
             throw new Error(error);
         }
 
         return obj;
-    } catch (error) {
+    } 
+    catch (error) {
         console.error("Error:", error.message);
         throw new Error("Error fetching AI response");
     }
