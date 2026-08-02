@@ -5,6 +5,7 @@ import Answer from "./components/Answer.js";
 import Spinner from "./components/Spinner.js";
 import type { Question } from "./types/Question.ts";
 import type { SavedAnswer } from "./types/SavedAnswer.ts";
+import Countdown from "./components/Countdown.tsx";
 
 function App() {
     const [question, setQuestion] = useState<Question | null>(null);
@@ -40,7 +41,7 @@ function App() {
             const newQuestion = await get<Question>(endpoints.specific(formattedDate));
             setQuestion(newQuestion);
             setLoading(false);
-            
+
             preSetAnswers(newQuestion);
         }
         catch (e) {
@@ -104,36 +105,40 @@ function App() {
                 </section>
             </header>
 
-            {
-                loading ? <Spinner /> :
-                    <main>
-                        <section className="question-info">
-                            <div>
-                                {question?.topic}
-                            </div>
-                            <div className={question?.difficulty}>
-                                <span>
-                                    {question?.difficulty === "Beginner" && "🌱"}
-                                    {question?.difficulty === "Intermediate" && "⚔️"}
-                                    {question?.difficulty === "Advanced" && "💀"}
-                                </span>
-                                {question?.difficulty}
-                            </div>
-                        </section>
+            <main>
+                {
+                    loading ? <Spinner /> :
+                        <article className="question-card">
+                            <section className="question-info">
+                                <div>
+                                    {question?.topic}
+                                </div>
+                                <div className={question?.difficulty}>
+                                    <span>
+                                        {question?.difficulty === "Beginner" && "🌱"}
+                                        {question?.difficulty === "Intermediate" && "⚔️"}
+                                        {question?.difficulty === "Advanced" && "💀"}
+                                    </span>
+                                    {question?.difficulty}
+                                </div>
+                            </section>
 
-                        <h3>{question?.question}</h3>
+                            <h3>{question?.question}</h3>
 
-                        <section className={isSubmitted ? "answers submitted-container" : "answers"}>
-                            {
-                                question?.answers.map((answer, i) => (
-                                    <Answer key={i} answer={answer} letter={letters[i]} selected={selectedAnswer} setSelected={setSelectedAnswer} index={i} correctIndex={question.correctAnswerIndex} isSubmitted={isSubmitted} />
-                                ))
-                            }
-                        </section>
+                            <section className={isSubmitted ? "answers submitted-container" : "answers"}>
+                                {
+                                    question?.answers.map((answer, i) => (
+                                        <Answer key={i} answer={answer} letter={letters[i]} selected={selectedAnswer} setSelected={setSelectedAnswer} index={i} correctIndex={question.correctAnswerIndex} isSubmitted={isSubmitted} />
+                                    ))
+                                }
+                            </section>
 
-                        {!isSubmitted && <button disabled={selectedAnswer === null} onClick={handleSubmit}>Submit Answer</button>}
-                    </main>
-            }
+                            {!isSubmitted && <button disabled={selectedAnswer === null} onClick={handleSubmit}>Submit Answer</button>}
+                        </article>
+                }
+
+                <Countdown />
+            </main>
         </>
     );
 }
