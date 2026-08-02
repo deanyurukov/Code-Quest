@@ -1,26 +1,32 @@
 import cron from "node-cron";
 import { spawn } from "child_process";
 
-const task = cron.schedule("0 0 * * *", () => {
-    console.log("Scheduling today's question worker...");
-    const workerPath = new URL("./daily-question-worker.js", import.meta.url).pathname;
+const task = cron.schedule(
+    "0 0 * * *",
+    () => {
+        console.log("Scheduling today's question worker...");
+        const workerPath = new URL("./daily-question-worker.js", import.meta.url).pathname;
 
-    const worker = spawn(process.execPath, [workerPath], {
-        detached: true,
-        stdio: ['ignore', 'pipe', 'pipe'],
-        env: process.env
-    });
+        const worker = spawn(process.execPath, [workerPath], {
+            detached: true,
+            stdio: ['ignore', 'pipe', 'pipe'],
+            env: process.env
+        });
 
-    worker.stdout.on('data', (data) => {
-        console.log(`[Worker] ${data}`);
-    });
+        worker.stdout.on('data', (data) => {
+            console.log(`[Worker] ${data}`);
+        });
 
-    worker.stderr.on('data', (data) => {
-        console.error(`[Worker Error] ${data}`);
-    });
+        worker.stderr.on('data', (data) => {
+            console.error(`[Worker Error] ${data}`);
+        });
 
-    worker.unref();
-});
+        worker.unref();
+    },
+    {
+        timezone: process.env.TIMEZONE || "Europe/Sofia",
+    }
+);
 
 task.on('execution:missed', () => {
     task.execute();
