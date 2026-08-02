@@ -35,21 +35,21 @@ const Countdown = () => {
                     <div>
                         <p>{timeLeft.hours[0]}</p>
                         <p>{timeLeft.hours[1]}</p>
-                        
-                        <span>:</span>
                     </div>
                     <span>Hours</span>
                 </div>
+
+                <span>:</span>
 
                 <div className="time-group">
                     <div>
                         <p>{timeLeft.minutes[0]}</p>
                         <p>{timeLeft.minutes[1]}</p>
-
-                        <span>:</span>
                     </div>
                     <span>Minutes</span>
                 </div>
+
+                <span>:</span>
 
                 <div className="time-group">
                     <div>

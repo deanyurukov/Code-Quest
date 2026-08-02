@@ -410,17 +410,19 @@ main {
         section:nth-child(2) {
             display: flex;
             justify-content: center;
+            align-items: flex-start;
             width: 100%;
-            gap: 0.4rem;
+            gap: 0.75rem;
             font-family: var(--font-mono);
             font-size: 2.2rem;
 
             .time-group {
                 display: flex;
                 flex-direction: column;
+                align-items: center;
                 gap: 0.6rem;
 
-                & > span {
+                span {
                     font-size: 1.1rem;
                     font-family: var(--font-inter);
                     font-weight: 700;
@@ -435,6 +437,7 @@ main {
                     justify-content: center;
                     align-items: center;
                     gap: 0.4em;
+                    min-height: 3.2rem;
 
                     p {
                         color: rgb(180, 83, 9);
@@ -444,12 +447,18 @@ main {
                         padding: 0.6rem 0.7rem;
                         border-radius: 1rem;
                     }
-
-                    span {
-                        margin-right: 0.6rem;
-                        color: rgb(217, 119, 6);
-                    }
                 }
+            }
+
+            &>span {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 3.2rem;
+                color: rgb(217, 119, 6);
+                line-height: 1;
+                padding-top: 0.15rem;
+                animation: pulse 0.8s alternate infinite ease-in-out;
             }
         }
     }
@@ -466,13 +475,13 @@ main {
     &:before {
         content: '{';
         display: inline-block;
-        animation: pulse 0.4s alternate infinite ease-in-out;
+        animation: pulse-spinner 0.4s alternate infinite ease-in-out;
     }
 
     &:after {
         content: '}';
         display: inline-block;
-        animation: pulse 0.4s 0.3s alternate infinite ease-in-out;
+        animation: pulse-spinner 0.4s 0.3s alternate infinite ease-in-out;
     }
 
     @media (width<=450px) {
@@ -480,9 +489,15 @@ main {
     }
 }
 
-@keyframes pulse {
+@keyframes pulse-spinner {
     to {
         transform: scale(0.8);
         opacity: 0.65;
+    }
+}
+
+@keyframes pulse {
+    to {
+        opacity: 0.1;
     }
 }
