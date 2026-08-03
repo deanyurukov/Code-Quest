@@ -39,7 +39,7 @@ export async function getAIResponse() {
                                        
                                     Do NOT wrap the response in Markdown, do NOT include explanations or any text outside the JSON, do NOT include code snippets, newline characters (\\n), HTML, Markdown, backticks, or escaped formatting. The 'question', 'topic', and 'difficulty' must be a single plain-text sentence / word, all values must be plain strings, and 'correctAnswerIndex' must be an integer from 0 to 3.
                                     
-                                    The question should NOT be of one of the following as they already exist: ${alreadyExisting.join(", ")}.`
+                                    The question should NOT be of one of the following as they already exist. Also, no more than 3 questions in a row should have the same difficulty. Here they are: ${alreadyExisting}.`
                             }
                         ]
                     }
