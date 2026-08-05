@@ -27,22 +27,22 @@
 html {
     font-size: 16px;
     scrollbar-width: thin;
-    scrollbar-color: rgb(180, 83, 9) var(--color-bg);
+    scrollbar-color: var(--color-button) var(--color-bg);
 
     &::-webkit-scrollbar {
-        width: 12px;
-        height: 12px;
+        width: 0.75rem;
+        height: 0.75rem;
     }
 
     &::-webkit-scrollbar-track {
         background: var(--color-bg);
-        border-radius: 999px;
+        border-radius: 100%;
         border: 1px solid rgba(217, 119, 6, 0.2);
     }
 
     &::-webkit-scrollbar-thumb {
-        background: rgb(180, 83, 9);
-        border-radius: 999px;
+        background: var(--color-button);
+        border-radius: 100%;
         border: 3px solid var(--color-bg);
     }
 
