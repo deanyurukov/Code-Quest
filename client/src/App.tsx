@@ -6,6 +6,8 @@ import Spinner from "./components/Spinner.js";
 import type { Question } from "./types/Question.ts";
 import type { SavedAnswer } from "./types/SavedAnswer.ts";
 import Countdown from "./components/Countdown.tsx";
+import { getSofiaDateString } from "./helpers/getSofiaDateString.ts";
+import { calculateStreak } from "./helpers/calculateStreak.ts";
 
 function App() {
     const [question, setQuestion] = useState<Question | null>(null);
@@ -13,6 +15,7 @@ function App() {
     const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
     const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
+    const [streak, setStreak] = useState<number>(0);
 
     async function getQuestion(): Promise<void> {
         try {
@@ -71,8 +74,20 @@ function App() {
         const saved: SavedAnswer[] = JSON.parse(localStorage.getItem("answers") ?? "[]");
 
         if (saved.find(q => q.date === question?.date) === undefined) {
-            saved.push({ date: question?.date!, isCorrect: selectedAnswer === question?.correctAnswerIndex, selected: selectedAnswer! });
+            saved.push(
+                {
+                    date: question?.date!,
+                    isCorrect: selectedAnswer === question?.correctAnswerIndex,
+                    selected: selectedAnswer!,
+                    answeredAt: getSofiaDateString()
+                }
+            );
+
+            saved.sort((a, b) => a.date.localeCompare(b.date));
+
             localStorage.setItem("answers", JSON.stringify(saved));
+
+            setStreak(calculateStreak(saved));
         }
 
         await get(endpoints.submitSpecific(question?.date!));
@@ -80,6 +95,9 @@ function App() {
 
     useEffect(() => {
         void getQuestion();
+
+        const saved: SavedAnswer[] = JSON.parse(localStorage.getItem("answers") ?? "[]");
+        setStreak(calculateStreak(saved));
     }, []);
 
     return (
