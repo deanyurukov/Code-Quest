@@ -20,7 +20,7 @@ function App() {
     async function getQuestion(): Promise<void> {
         try {
             setLoading(true);
-            const data = await get<Question>(endpoints.today);
+            const data = await get<Question>(endpoints.specific(getSofiaDateString()));
             setQuestion(data);
 
             preSetAnswers(data);
