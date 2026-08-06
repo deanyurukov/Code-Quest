@@ -109,13 +109,13 @@ function App() {
                 </section>
 
                 <section className="day">
-                    <button disabled={question?.previousExists === false} onClick={() => getDiffQuestion(-1)} >
+                    <button disabled={question?.previousExists === false || loading} onClick={() => getDiffQuestion(-1)} >
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" data-fg-d3bl34="0.8:0.125:node_modules/lucide-react:339:31:12390:35:e:ChevronLeft::::::O1c" data-fgid-d3bl34=":r11:"><path d="m15 18-6-6 6-6"></path></svg>
                         </span>
                     </button>
                     <h2>Day {loading ? "..." : question?.dayNumber}</h2>
-                    <button disabled={question?.nextExists === false} onClick={() => getDiffQuestion(1)} >
+                    <button disabled={question?.nextExists === false || loading} onClick={() => getDiffQuestion(1)} >
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" data-fg-d3bl35="0.8:0.125:node_modules/lucide-react:339:69:12428:36:e:ChevronRight::::::ByYJ" data-fgid-d3bl35=":r18:"><path d="m9 18 6-6-6-6"></path></svg>
                         </span>
