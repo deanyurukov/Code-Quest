@@ -24,22 +24,36 @@ export async function getAIResponse() {
 
                                     The topic can vary widely and may cover programming languages, algorithms, data structures, databases, software engineering, web development, networking, operating systems, security, or general computer science concepts.
 
-                                    It shall not be always data structures!
+                                    Do not always generate data structures questions.
 
-                                    The difficulty can be beginner, intermediate, or advanced.
-                                    
+                                    The difficulty can be Beginner, Intermediate, or Advanced.
+
                                     Return ONLY a valid JSON object with exactly this structure:
-                                        {
-                                            'question':'string',
-                                            'answers':['string','string','string','string'],
-                                            'correctAnswerIndex':0,
-                                            'topic':'string',
-                                            'difficulty':'string'
-                                        }.
-                                       
-                                    Do NOT wrap the response in Markdown, do NOT include explanations or any text outside the JSON, do NOT include code snippets, newline characters (\\n), HTML, Markdown, backticks, or escaped formatting. The 'question', 'topic', and 'difficulty' must be a single plain-text sentence / word, all values must be plain strings, and 'correctAnswerIndex' must be an integer from 0 to 3.
-                                    
-                                    The question should NOT be of one of the following as they already exist. Also, no more than 3 questions in a row should have the same difficulty. Please stop making every question have intermediate difficulty!!! Here they are: ${alreadyExisting}.`
+
+                                    {
+                                        "question": "string",
+                                        "answers": ["string", "string", "string", "string"],
+                                        "correctAnswerIndex": 0,
+                                        "topic": "string",
+                                        "difficulty": "Beginner | Intermediate | Advanced",
+                                        "explanation": "string"
+                                    }
+
+                                    Rules:
+                                    - Do NOT wrap the response in Markdown.
+                                    - Do NOT include any text outside the JSON.
+                                    - Do NOT include code snippets, HTML, Markdown, backticks, newline characters (\n), or escaped formatting.
+                                    - The "question" must be a single plain-text sentence.
+                                    - The "topic" must be a short plain-text string.
+                                    - The "difficulty" must be exactly one of: "Beginner", "Intermediate", or "Advanced".
+                                    - "correctAnswerIndex" must be an integer from 0 to 3.
+                                    - The explanation must be 2–4 concise sentences.
+                                    - The explanation must explain only why the correct answer is correct. Do not mention or compare the incorrect answers.
+                                    - The explanation should teach the underlying concept rather than simply restating the answer.
+
+                                    Do not generate a question that matches any of the existing questions below. Also, avoid having more than 3 questions in a row with the same difficulty.
+
+                                    Existing questions: {alreadyExisting}.`
                             }
                         ]
                     }
@@ -64,13 +78,13 @@ export async function getAIResponse() {
                 topic: obj.topic,
                 difficulty: obj.difficulty
             });
-        } 
+        }
         catch (error) {
             throw new Error(error);
         }
 
         return obj;
-    } 
+    }
     catch (error) {
         console.error("Error:", error.message);
         throw new Error("Error fetching AI response");

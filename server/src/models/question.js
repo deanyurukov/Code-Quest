@@ -14,7 +14,8 @@ const questionSchema = new Schema(
         submissions: {
             default: 0,
             type: Number,
-        }
+        },
+        explanation: String
     },
     {
         timestamps: true,
