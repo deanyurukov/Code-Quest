@@ -100,7 +100,7 @@ header {
 
     .title p,
     .day h2 {
-        background: linear-gradient(135deg, rgb(180, 83, 9) 0%, rgb(217, 119, 6) 45%, rgb(245, 158, 11) 100%) text;
+        background: linear-gradient(135deg, var(--color-button) 0%, rgb(217, 119, 6) 45%, rgb(245, 158, 11) 100%) text;
         -webkit-text-fill-color: transparent;
         text-shadow: none;
     }
@@ -378,7 +378,7 @@ main {
 
                 span {
                     background: rgb(254, 249, 238);
-                    color: rgb(180, 83, 9);
+                    color: var(--color-button);
                     border-radius: 100%;
                     font-size: 0.75rem;
                     font-weight: 900;
@@ -397,7 +397,7 @@ main {
         }
 
         button {
-            background: linear-gradient(135deg, rgb(180, 83, 9), rgb(217, 119, 6), rgb(245, 158, 11));
+            background: linear-gradient(135deg, var(--color-button), rgb(217, 119, 6), rgb(245, 158, 11));
             color: var(--color-white);
             box-shadow: rgba(217, 119, 6, 0.4) 0px 8px 24px, rgba(217, 119, 6, 0.2) 0px 2px 6px;
             cursor: pointer;
@@ -418,12 +418,84 @@ main {
                 box-shadow: none;
                 cursor: not-allowed;
 
-                &:hover {
-                    scale: 1;
-                }
-
+                &:hover,
                 &:active {
                     scale: 1;
+                }
+            }
+        }
+
+        .explanation {
+            display: flex;
+            justify-content: start;
+            width: 100%;
+            flex-direction: column;
+            gap: 1rem;
+            padding: 1.25rem;
+            margin-top: 2rem;
+            border: 1px solid;
+            border-radius: var(--border-r);
+
+            article {
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+
+                &:nth-child(2) {
+                    align-items: start;
+                }
+
+                h5 {
+                    font-weight: 900;
+                    font-size: 1.25rem;
+                    line-height: 1.5rem;
+                    font-family: var(--font-nunito);
+                }
+
+                p {
+                    font-size: 1rem;
+                    font-family: var(--font-inter);
+                    line-height: 1.5rem;
+                }
+
+                svg {
+                    width: 1.5rem;
+                    height: 1.5rem;
+                    flex-shrink: 0;
+                }
+            }
+            
+            &.correct {
+                background: linear-gradient(135deg, rgb(240, 253, 244), rgb(220, 252, 231));
+                border-color: rgb(134, 239, 172);
+
+                h5 {
+                    color: rgb(22, 101, 52);
+                }
+
+                p {
+                    color: rgb(21, 128, 61);
+                }
+
+                svg {
+                    color: #00bc7d;
+                }
+            }
+
+            &.wrong {
+                background: linear-gradient(135deg, rgb(254, 242, 242), rgb(254, 226, 226));
+                border-color: rgb(252, 165, 165);
+
+                h5 {
+                    color: rgb(153, 27, 27);
+                }
+
+                p {
+                    color: rgb(185, 28, 28);
+                }
+
+                svg {
+                    color: #dc2626;
                 }
             }
         }
@@ -450,7 +522,7 @@ main {
                 aspect-ratio: 1 / 1;
 
                 svg {
-                    color: rgb(180, 83, 9);
+                    color: var(--color-button);
                 }
             }
 
@@ -500,7 +572,7 @@ main {
                     gap: 0.4rem;
 
                     p {
-                        color: rgb(180, 83, 9);
+                        color: var(--color-button);
                         background: rgb(255, 246, 225);
                         border: 1.5px solid rgba(217, 119, 6, 0.18);
                         line-height: 2.2rem;
@@ -529,7 +601,7 @@ main {
 }
 
 .loader {
-    color: rgb(180, 83, 9);
+    color: var(--color-button);
     font-family: Consolas, Menlo, Monaco, monospace;
     font-weight: bold;
     font-size: calc(78 * 1.5px);

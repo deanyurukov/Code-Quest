@@ -8,6 +8,7 @@ import type { SavedAnswer } from "./types/SavedAnswer.ts";
 import Countdown from "./components/Countdown.tsx";
 import { getSofiaDateString } from "./helpers/getSofiaDateString.ts";
 import { calculateStreak } from "./helpers/calculateStreak.ts";
+import QuestionExplanation from "./components/QuestionExplanation.tsx";
 
 function App() {
     const [question, setQuestion] = useState<Question | null>(null);
@@ -111,19 +112,19 @@ function App() {
                 <section className="day">
                     <button disabled={question?.previousExists === false || loading} onClick={() => getDiffQuestion(-1)} >
                         <span>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" data-fg-d3bl34="0.8:0.125:node_modules/lucide-react:339:31:12390:35:e:ChevronLeft::::::O1c" data-fgid-d3bl34=":r11:"><path d="m15 18-6-6 6-6"></path></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"></path></svg>
                         </span>
                     </button>
                     <h2>Day {loading ? "..." : question?.dayNumber}</h2>
                     <button disabled={question?.nextExists === false || loading} onClick={() => getDiffQuestion(1)} >
                         <span>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" data-fg-d3bl35="0.8:0.125:node_modules/lucide-react:339:69:12428:36:e:ChevronRight::::::ByYJ" data-fgid-d3bl35=":r18:"><path d="m9 18 6-6-6-6"></path></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"></path></svg>
                         </span>
                     </button>
                 </section>
 
                 <section className="streak">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" data-fg-d3bl14="0.8:288.5191:node_modules/lucide-react:264:7:9640:44:e:Flame::::::DE75" data-fgid-d3bl14=":rf:"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg>
                     <p>{streak}</p>
                 </section>
             </header>
@@ -156,7 +157,11 @@ function App() {
                                 }
                             </section>
 
-                            {!isSubmitted && <button disabled={selectedAnswer === null} onClick={handleSubmit}>Submit Answer</button>}
+                            {
+                                !isSubmitted ?
+                                <button disabled={selectedAnswer === null} onClick={handleSubmit}>Submit Answer</button> :
+                                <QuestionExplanation explanation={question?.explanation!} isCorrect={question?.correctAnswerIndex === selectedAnswer} />
+                            }
                         </article>
                 }
 
