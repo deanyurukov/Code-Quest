@@ -76,7 +76,8 @@ export async function getAIResponse() {
                 answers: obj.answers,
                 correctAnswerIndex: obj.correctAnswerIndex,
                 topic: obj.topic,
-                difficulty: obj.difficulty
+                difficulty: obj.difficulty,
+                explanation: obj.explanation,
             });
         }
         catch (error) {
