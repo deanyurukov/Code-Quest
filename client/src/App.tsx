@@ -11,8 +11,14 @@ import { calculateStreak } from "./helpers/calculateStreak.ts";
 import QuestionExplanation from "./components/QuestionExplanation.tsx";
 
 function App() {
-    const [question, setQuestion] = useState<Question | null>(null);
     const letters: string[] = ["A", "B", "C", "D"];
+    const xpLevels = {
+        Beginner: 50,
+        Intermediate: 100,
+        Advanced: 150
+    } as const;
+
+    const [question, setQuestion] = useState<Question | null>(null);
     const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
     const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
@@ -139,17 +145,23 @@ function App() {
                     loading ? <Spinner /> :
                         <article className="question-card">
                             <section className="question-info">
-                                <div>
-                                    {question?.topic}
-                                </div>
-                                <div className={question?.difficulty}>
-                                    <span>
-                                        {question?.difficulty === "Beginner" && "🌱"}
-                                        {question?.difficulty === "Intermediate" && "⚔️"}
-                                        {question?.difficulty === "Advanced" && "💀"}
-                                    </span>
-                                    {question?.difficulty}
-                                </div>
+                                <article>
+                                    <div>
+                                        {question?.topic}
+                                    </div>
+                                    <div className={question?.difficulty}>
+                                        <span>
+                                            {question?.difficulty === "Beginner" && "🌱"}
+                                            {question?.difficulty === "Intermediate" && "⚔️"}
+                                            {question?.difficulty === "Advanced" && "💀"}
+                                        </span>
+                                        {question?.difficulty}
+                                    </div>
+                                </article>
+                                <article>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg>
+                                    <p>+{xpLevels[question?.difficulty!]} XP</p>
+                                </article>
                             </section>
 
                             <h3>{question?.question}</h3>
