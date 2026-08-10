@@ -53,7 +53,7 @@ export async function getAIResponse() {
 
                                     Do not generate a question that matches any of the existing questions below. Also, avoid having more than 3 questions in a row with the same difficulty.
 
-                                    Existing questions: ${alreadyExisting}.`
+                                    Existing questions ordered from oldest to newest: ${alreadyExisting}.`
                             }
                         ]
                     }
