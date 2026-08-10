@@ -22,7 +22,7 @@ export async function getAIResponse() {
                                 text: `
                                     Generate one multiple-choice question about programming or computer science.
 
-                                    The topic can vary widely and may cover programming languages, algorithms, data structures, databases, software engineering, web development, networking, operating systems, security, or general computer science concepts.
+                                    The topic can vary widely and may cover algorithms, data structures, databases, software engineering, web development, networking, operating systems, security, or general computer science concepts, as well as hardware. It can also be about a certain programming language (JS, TS, Java, C#, etc.) or specifics about them.
 
                                     Do not always generate data structures questions.
 
