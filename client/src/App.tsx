@@ -106,7 +106,7 @@ function App() {
 
             setTimeout(() => {
                 setShowXpGain(false);
-            }, 3000);
+            }, 2500);
         }
     }
 
