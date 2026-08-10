@@ -17,6 +17,7 @@ function App() {
     const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
     const [streak, setStreak] = useState<number>(0);
+    const [correctAnswerIndex, setCorrectAnswerIndex] = useState<number | null>(null);
 
     async function getQuestion(): Promise<void> {
         try {
@@ -62,15 +63,22 @@ function App() {
         if (questionAnswered !== undefined) {
             setIsSubmitted(true);
             setSelectedAnswer(questionAnswered.selected);
+            setCorrectAnswerIndex(questionAnswered.correctAnswerIndex);
         }
         else {
             setIsSubmitted(false);
             setSelectedAnswer(null);
+            setCorrectAnswerIndex(null);
         }
     }
 
     async function handleSubmit(e: any): Promise<void> {
         e.preventDefault();
+        if (selectedAnswer === null) return;
+
+        const { isCorrect, correctAnswerIndex }: { isCorrect: boolean, correctAnswerIndex: number } = await get(endpoints.submitSpecific(question?.date!), { selectedAnswer });
+        setCorrectAnswerIndex(correctAnswerIndex);
+
         setIsSubmitted(true);
         const saved: SavedAnswer[] = JSON.parse(localStorage.getItem("answers") ?? "[]");
 
@@ -78,20 +86,17 @@ function App() {
             saved.push(
                 {
                     date: question?.date!,
-                    isCorrect: selectedAnswer === question?.correctAnswerIndex,
+                    isCorrect: isCorrect,
                     selected: selectedAnswer!,
-                    answeredAt: getSofiaDateString()
+                    answeredAt: getSofiaDateString(),
+                    correctAnswerIndex: correctAnswerIndex
                 }
             );
 
             saved.sort((a, b) => a.date.localeCompare(b.date));
-
             localStorage.setItem("answers", JSON.stringify(saved));
-
             setStreak(calculateStreak(saved));
         }
-
-        await get(endpoints.submitSpecific(question?.date!));
     }
 
     useEffect(() => {
@@ -152,15 +157,15 @@ function App() {
                             <section className={isSubmitted ? "answers submitted-container" : "answers"}>
                                 {
                                     question?.answers.map((answer, i) => (
-                                        <Answer key={i} answer={answer} letter={letters[i]} selected={selectedAnswer} setSelected={setSelectedAnswer} index={i} correctIndex={question.correctAnswerIndex} isSubmitted={isSubmitted} />
+                                        <Answer key={i} answer={answer} letter={letters[i]} selected={selectedAnswer} setSelected={setSelectedAnswer} index={i} correctIndex={correctAnswerIndex!} isSubmitted={isSubmitted} />
                                     ))
                                 }
                             </section>
 
                             {
                                 !isSubmitted ?
-                                <button disabled={selectedAnswer === null} onClick={handleSubmit}>Submit Answer</button> :
-                                <QuestionExplanation explanation={question?.explanation!} isCorrect={question?.correctAnswerIndex === selectedAnswer} />
+                                    <button disabled={selectedAnswer === null} onClick={handleSubmit}>Submit Answer</button> :
+                                    <QuestionExplanation explanation={question?.explanation!} isCorrect={correctAnswerIndex === selectedAnswer} />
                             }
                         </article>
                 }

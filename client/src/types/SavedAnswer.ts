@@ -3,4 +3,5 @@ export type SavedAnswer = {
     isCorrect: boolean;
     selected: number;
     answeredAt: string;
+    correctAnswerIndex: number;
 }

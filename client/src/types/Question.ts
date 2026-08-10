@@ -5,7 +5,6 @@ export type Question = {
     answers: string[],
     topic: string,
     difficulty: string,
-    correctAnswerIndex: number,
     explanation: string,
     dayNumber: number,
     previousExists: boolean,

@@ -15,6 +15,7 @@ router.get("/question/:date", async (req, res) => {
     }
 
     const response = question.toObject();
+    delete response.correctAnswerIndex;
     const formatted = await formatResponse(response);
 
     res.json(formatted);
@@ -23,6 +24,7 @@ router.get("/question/:date", async (req, res) => {
 router.get("/question/submission/:date", async (req, res) => {
     const day = new Date(req.params.date);
     const question = await getQuestion(day);
+    const selected = Number(req.query.selectedAnswer);
 
     if (!question) {
         return res.status(404).json({ error: `No question found for day ${day}` });
@@ -30,7 +32,7 @@ router.get("/question/submission/:date", async (req, res) => {
 
     question.submissions++;
     await question.save();
-    res.sendStatus(200);
+    res.status(200).json({ correctAnswerIndex: question.correctAnswerIndex, isCorrect: question.correctAnswerIndex === selected });
 });
 
 export default router;
