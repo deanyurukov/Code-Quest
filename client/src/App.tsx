@@ -12,11 +12,7 @@ import QuestionExplanation from "./components/QuestionExplanation.tsx";
 
 function App() {
     const letters: string[] = ["A", "B", "C", "D"];
-    const xpLevels = {
-        Beginner: 50,
-        Intermediate: 100,
-        Advanced: 150
-    } as const;
+    const xpLevels = { Beginner: 50, Intermediate: 100, Advanced: 150 } as const;
 
     const [question, setQuestion] = useState<Question | null>(null);
     const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
@@ -24,6 +20,7 @@ function App() {
     const [loading, setLoading] = useState<boolean>(false);
     const [streak, setStreak] = useState<number>(0);
     const [correctAnswerIndex, setCorrectAnswerIndex] = useState<number | null>(null);
+    const [showXpGain, setShowXpGain] = useState<boolean>(false);
 
     async function getQuestion(): Promise<void> {
         try {
@@ -103,6 +100,14 @@ function App() {
             localStorage.setItem("answers", JSON.stringify(saved));
             setStreak(calculateStreak(saved));
         }
+
+        if (isCorrect) {
+            setShowXpGain(true);
+
+            setTimeout(() => {
+                setShowXpGain(false);
+            }, 3000);
+        }
     }
 
     useEffect(() => {
@@ -144,6 +149,10 @@ function App() {
                 {
                     loading ? <Spinner /> :
                         <article className="question-card">
+                            <div className={`xp-gain ${showXpGain ? "show" : ""}`}>
+                                +{xpLevels[question?.difficulty!]} XP
+                            </div>
+
                             <section className="question-info">
                                 <article>
                                     <div>
