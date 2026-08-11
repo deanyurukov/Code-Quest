@@ -1,17 +1,22 @@
 import { useEffect, useState } from "react";
-import { get } from "./api/requester.ts";
-import { endpoints } from "./api/endpoints.ts";
-import Answer from "./components/Answer.js";
-import Spinner from "./components/Spinner.js";
+
 import type { Question } from "./types/Question.ts";
 import type { SavedAnswer } from "./types/SavedAnswer.ts";
-import Countdown from "./components/Countdown.tsx";
+import type { User } from "./types/User.ts";
+
+import { get, post } from "./api/requester.ts";
+import { endpoints } from "./api/endpoints.ts";
+
 import { getSofiaDateString } from "./helpers/getSofiaDateString.ts";
 import { calculateStreak } from "./helpers/calculateStreak.ts";
+
+import Answer from "./components/Answer.tsx";
+import Spinner from "./components/Spinner.tsx";
+import Countdown from "./components/Countdown.tsx";
 import QuestionExplanation from "./components/QuestionExplanation.tsx";
 
 function App() {
-    const letters: string[] = ["A", "B", "C", "D"];
+    const letters: string[] = ["A", "B", "C", "D"] as const;
     const xpLevels = { Beginner: 50, Intermediate: 100, Advanced: 150 } as const;
 
     const [question, setQuestion] = useState<Question | null>(null);
@@ -22,13 +27,22 @@ function App() {
     const [correctAnswerIndex, setCorrectAnswerIndex] = useState<number | null>(null);
     const [showXpGain, setShowXpGain] = useState<boolean>(false);
 
-    async function getQuestion(): Promise<void> {
+    async function getInitialData(): Promise<void> {
         try {
             setLoading(true);
-            const data = await get<Question>(endpoints.specific(getSofiaDateString()));
-            setQuestion(data);
+            const questionData = await get<Question>(endpoints.specific(getSofiaDateString()));
+            setQuestion(questionData);
 
-            preSetAnswers(data);
+            let userExists: boolean = localStorage.getItem("accessToken") !== null;
+
+            if (!userExists) {
+                localStorage.setItem("accessToken", JSON.stringify({ userId: (await post<{ userId: string }>(endpoints.anonymous)).userId }));
+            }
+            
+            const userId = JSON.parse(localStorage.getItem("accessToken")!).userId;
+            console.log(userId);
+
+            preSetAnswers(questionData);
         }
         catch (e) {
             console.error(e);
@@ -111,7 +125,7 @@ function App() {
     }
 
     useEffect(() => {
-        void getQuestion();
+        void getInitialData();
 
         const saved: SavedAnswer[] = JSON.parse(localStorage.getItem("answers") ?? "[]");
         setStreak(calculateStreak(saved));

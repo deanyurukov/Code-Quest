@@ -2,6 +2,7 @@ import express from "express";
 import './config.js';
 import mongoose from "mongoose";
 import questionRoutes from "./routes/question-routes.js";
+import userRoutes from "./routes/user-routes.js";
 import adminRoutes from "./routes/admin-routes.js";
 import './cron/daily-question-cron.js';
 
@@ -56,6 +57,7 @@ app.use((req, res, next) => {
 
 app.use(questionRoutes);
 app.use(adminRoutes);
+app.use(userRoutes);
 
 app.use((req, res) => {
     res.status(404).send("Route not found");
