@@ -5,4 +5,5 @@ export const endpoints = {
     submitSpecific: (day: string) => `${baseUrl}/question/submission/${day}`,
     user: `${baseUrl}/user`,
     anonymous: `${baseUrl}/user/anonymous`,
+    submitAnswer: `${baseUrl}/user/submission`,
 };

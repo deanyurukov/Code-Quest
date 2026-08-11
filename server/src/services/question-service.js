@@ -7,3 +7,10 @@ export async function getQuestion(date = new Date()) {
 
     return question;
 }
+
+export async function getAllQuestions() {
+    const questions = (await Question.find()).sort((a, b) => a.date.localeCompare(b.date)).map(q => {
+        return { question: q.question, difficulty: q.difficulty };
+    });
+    return questions;
+}

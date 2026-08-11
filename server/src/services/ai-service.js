@@ -1,6 +1,6 @@
-import { getAllQuestions } from "../helpers/getAllQuestions.js";
 import Question from "../models/question.js";
 import { getSofiaDateString } from "./date-service.js";
+import { getAllQuestions } from "./question-service.js";
 
 const url = process.env.AI_URL;
 

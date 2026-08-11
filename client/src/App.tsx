@@ -4,7 +4,7 @@ import type { Question } from "./types/Question.ts";
 import type { SavedAnswer } from "./types/SavedAnswer.ts";
 import type { User } from "./types/User.ts";
 
-import { get, post } from "./api/requester.ts";
+import { get, post, put } from "./api/requester.ts";
 import { endpoints } from "./api/endpoints.ts";
 
 import { getSofiaDateString } from "./helpers/getSofiaDateString.ts";
@@ -67,7 +67,7 @@ function App() {
             const newQuestion = await get<Question>(endpoints.specific(formattedDate));
             setQuestion(newQuestion);
             setLoading(false);
-            
+
             preSetAnswers(newQuestion, user!);
         }
         catch (e) {
@@ -101,22 +101,25 @@ function App() {
         setCorrectAnswerIndex(correctAnswerIndex);
 
         setIsSubmitted(true);
-        const saved: SavedAnswer[] = JSON.parse(localStorage.getItem("answers") ?? "[]");
 
-        if (saved.find(q => q.date === question?.date) === undefined) {
-            saved.push(
-                {
-                    date: question?.date!,
-                    isCorrect: isCorrect,
-                    selected: selectedAnswer!,
-                    answeredAt: getSofiaDateString(),
-                    correctAnswerIndex: correctAnswerIndex
-                }
-            );
+        if (user?.answers.find(q => q.date === question?.date) === undefined) {
+            const newAnswers: SavedAnswer[] = await put(endpoints.submitAnswer, {
+                date: question?.date!,
+                isCorrect: isCorrect,
+                selected: selectedAnswer!,
+                id: user?._id
+            });
 
-            saved.sort((a, b) => a.date.localeCompare(b.date));
-            localStorage.setItem("answers", JSON.stringify(saved));
-            setStreak(calculateStreak(saved));
+            setUser(prev => {
+                if (!prev) return prev;
+
+                return {
+                    ...prev,
+                    answers: newAnswers
+                };
+            });
+
+            setStreak(calculateStreak(newAnswers));
         }
 
         if (isCorrect) {

@@ -10,7 +10,11 @@ const questionSchema = new Schema(
         answers: [String],
         topic: String,
         difficulty: String,
-        correctAnswerIndex: Number,
+        correctAnswerIndex: {
+            type: Number,
+            min: 0,
+            max: 3
+        },
         submissions: {
             default: 0,
             type: Number,

@@ -1,6 +1,5 @@
 import Question from "../models/question.js";
-import { getSofiaDateString } from "../services/date-service.js";
-import getDayNumber from "./dayNumber.js";
+import { getDayNumber, getSofiaDateString } from "../services/date-service.js";
 
 export default async function formatResponse(res) {
     const dayNumber = getDayNumber(res.date);

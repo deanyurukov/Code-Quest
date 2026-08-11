@@ -1,7 +1,6 @@
 import express from "express";
 import { getQuestion } from "../services/question-service.js";
-import { getSofiaDateString } from "../services/date-service.js";
-import getDayNumber from "../helpers/dayNumber.js";
+import { getDayNumber, getSofiaDateString } from "../services/date-service.js";
 import formatResponse from "../helpers/responseFormatter.js";
 
 const router = express.Router();

@@ -1,5 +1,8 @@
 import express from "express";
 import User from "../models/user.js";
+import { getQuestion } from "../services/question-service.js";
+import { getSofiaDateString } from "../services/date-service.js";
+import { sortUserAnswers } from "../services/user-service.js";
 
 const router = express.Router();
 
@@ -28,14 +31,49 @@ router.get("/user", async (req, res) => {
 router.post("/user/anonymous", async (req, res) => {
     try {
         const user = await User.create({});
-        console.log(user);
-
         res.status(201).json({ userId: user._id });
     }
     catch (e) {
         console.error(e);
         res.sendStatus(500);
     }
+});
+
+router.put("/user/submission", async (req, res) => {
+    const xpLevels = { Beginner: 50, Intermediate: 100, Advanced: 150 };
+
+    const { id, date, isCorrect, selected } = req.body;
+
+    if (!id) {
+        return res.status(400).json({ error: "User id is required" });
+    }
+
+    const user = await User.findById(id);
+
+    if (!user) {
+        return res.status(404).json({ error: "User not found" });
+    }
+
+    const question = await getQuestion(new Date(date));
+
+    if (!question) {
+        return res.status(404).json({ error: "Question not found" });
+    }
+
+    user.answers.push({
+        date,
+        isCorrect,
+        selected,
+        answeredAt: getSofiaDateString(),
+        correctAnswerIndex: question.correctAnswerIndex
+    });
+
+    user.answers = sortUserAnswers(user.answers);
+    user.xp += xpLevels[question.difficulty];
+
+    await user.save();
+
+    res.json(user.answers);
 });
 
 export default router;
