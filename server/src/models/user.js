@@ -4,8 +4,7 @@ const savedAnswerSchema = new Schema(
     {
         date: {
             type: String,
-            required: true,
-            unique: true,
+            required: true
         },
         selected: {
             type: Number,
