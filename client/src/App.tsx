@@ -26,6 +26,7 @@ function App() {
     const [streak, setStreak] = useState<number>(0);
     const [correctAnswerIndex, setCorrectAnswerIndex] = useState<number | null>(null);
     const [showXpGain, setShowXpGain] = useState<boolean>(false);
+    const [user, setUser] = useState<User | null>(null);
 
     async function getInitialData(): Promise<void> {
         try {
@@ -38,11 +39,14 @@ function App() {
             if (!userExists) {
                 localStorage.setItem("accessToken", JSON.stringify({ userId: (await post<{ userId: string }>(endpoints.anonymous)).userId }));
             }
-            
-            const userId = JSON.parse(localStorage.getItem("accessToken")!).userId;
-            console.log(userId);
 
-            preSetAnswers(questionData);
+            const userId = JSON.parse(localStorage.getItem("accessToken")!).userId;
+            const user = await get<User>(endpoints.user, { id: userId });
+
+            setUser(user);
+            setStreak(calculateStreak(user.answers));
+
+            preSetAnswers(questionData, user);
         }
         catch (e) {
             console.error(e);
@@ -63,8 +67,8 @@ function App() {
             const newQuestion = await get<Question>(endpoints.specific(formattedDate));
             setQuestion(newQuestion);
             setLoading(false);
-
-            preSetAnswers(newQuestion);
+            
+            preSetAnswers(newQuestion, user!);
         }
         catch (e) {
             console.error(e);
@@ -74,8 +78,8 @@ function App() {
         }
     }
 
-    function preSetAnswers(data: Question) {
-        const questionAnswered: SavedAnswer | undefined = JSON.parse(localStorage.getItem("answers") ?? "[]").find((q: SavedAnswer) => q.date! === data.date);
+    function preSetAnswers(data: Question, user: User) {
+        const questionAnswered: SavedAnswer | undefined = user?.answers.find((q: SavedAnswer) => q.date! === data.date);
 
         if (questionAnswered !== undefined) {
             setIsSubmitted(true);
@@ -126,9 +130,6 @@ function App() {
 
     useEffect(() => {
         void getInitialData();
-
-        const saved: SavedAnswer[] = JSON.parse(localStorage.getItem("answers") ?? "[]");
-        setStreak(calculateStreak(saved));
     }, []);
 
     return (
