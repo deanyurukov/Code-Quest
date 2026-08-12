@@ -1,0 +1,14 @@
+:root {
+    --color-bg: #fafaf8;
+    --color-white: #ffffff;
+    --color-border: #d9770680;
+    --color-button-bg: linear-gradient(135deg, rgb(254, 249, 238), rgb(254, 243, 199));
+    --color-button: rgb(180, 83, 9);
+
+    --font-cinzel: "Cinzel";
+    --font-nunito: "Nunito";
+    --font-inter: "Inter";
+    --font-mono: "JetBrains Mono";
+
+    --border-r: 1rem;
+}

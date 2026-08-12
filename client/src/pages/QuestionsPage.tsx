@@ -16,7 +16,7 @@ import Answer from '../components/Answer.tsx';
 import Spinner from '../components/Spinner.tsx';
 import { useOutletContext } from 'react-router-dom';
 
-const QuestionPage = () => {
+const QuestionsPage = () => {
     const letters: string[] = ["A", "B", "C", "D"] as const;
     const xpLevels = { Beginner: 50, Intermediate: 100, Advanced: 150 } as const;
 
@@ -122,7 +122,7 @@ const QuestionPage = () => {
 
     return (
         <>
-            <main>
+            <main id='questions-page'>
                 <article className="day">
                     <button disabled={question?.previousExists === false || loading} onClick={() => getDiffQuestion(-1)} >
                         <span>
@@ -188,4 +188,4 @@ const QuestionPage = () => {
     );
 }
 
-export default QuestionPage;
+export default QuestionsPage;

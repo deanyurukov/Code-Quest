@@ -1,0 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Nunito:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+
+@import url(./varaibles.css);
+@import url(./reset.css);
+
+@import url(./spinner.css);
+
+@import url(./header.css);
+@import url(./questions-page.css);
