@@ -69,7 +69,10 @@ router.put("/user/submission", async (req, res) => {
     });
 
     user.answers = sortUserAnswers(user.answers);
-    user.xp += xpLevels[question.difficulty];
+
+    if (isCorrect) {
+        user.xp += xpLevels[question.difficulty];
+    }
 
     await user.save();
 
