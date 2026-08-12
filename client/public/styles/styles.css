@@ -98,8 +98,7 @@ header {
         width: 95%;
     }
 
-    .title p,
-    .day h2 {
+    .title p {
         background: linear-gradient(135deg, var(--color-button) 0%, rgb(217, 119, 6) 45%, rgb(245, 158, 11) 100%) text;
         -webkit-text-fill-color: transparent;
         text-shadow: none;
@@ -124,71 +123,6 @@ header {
             font-family: var(--font-cinzel);
             line-height: 1;
             text-align: center;
-        }
-    }
-
-    .day {
-        display: flex;
-        width: 100%;
-        justify-content: space-between;
-        align-items: center;
-        background: var(--color-white);
-        border: 1px solid var(--color-border);
-        border-radius: var(--border-r);
-        padding: 1.5rem 1rem;
-
-        @media (width<=700px) {
-            padding: 1rem 0.75rem;
-        }
-
-        h2 {
-            font-family: var(--font-nunito);
-            font-size: 3rem;
-            font-weight: 800;
-        }
-
-        button:disabled span {
-            background: rgb(245, 245, 240);
-            border: 1.5px solid rgb(229, 224, 216);
-            color: rgb(196, 186, 168);
-            cursor: not-allowed;
-
-            &:hover {
-                scale: 1;
-            }
-
-            &:active {
-                scale: 1;
-            }
-        }
-
-        button span {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            padding: 10px;
-            border-radius: 100%;
-            border: 1.5px solid var(--color-border);
-            background: var(--color-button-bg);
-            color: var(--color-button);
-
-            &:hover {
-                scale: 1.05;
-            }
-
-            &:active {
-                scale: 0.95;
-            }
-
-            @media (width<=500px) {
-                padding: 8px;
-
-                svg {
-                    width: 22px;
-                    height: 22px;
-                }
-            }
         }
     }
 
@@ -251,6 +185,66 @@ main {
         }
     }
 
+    .day {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem 1rem;
+
+        h2 {
+            font-family: var(--font-nunito);
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--color-button) 0%, rgb(217, 119, 6) 45%, rgb(245, 158, 11) 100%) text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: none;
+        }
+
+        button:disabled span {
+            background: rgb(245, 245, 240);
+            border: 1.5px solid rgb(229, 224, 216);
+            color: rgb(196, 186, 168);
+            cursor: not-allowed;
+
+            &:hover {
+                scale: 1;
+            }
+
+            &:active {
+                scale: 1;
+            }
+        }
+
+        button span {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 100%;
+            border: 1.5px solid var(--color-border);
+            background: var(--color-button-bg);
+            color: var(--color-button);
+
+            &:hover {
+                scale: 1.05;
+            }
+
+            &:active {
+                scale: 0.95;
+            }
+
+            @media (width<=500px) {
+                padding: 8px;
+
+                svg {
+                    width: 22px;
+                    height: 22px;
+                }
+            }
+        }
+    }
+
     .question-card {
         gap: 1rem;
 
@@ -269,13 +263,14 @@ main {
             right: 50%;
             transform: translate(50%);
             pointer-events: none;
+            z-index: 100;
 
             font-family: var(--font-nunito);
             font-weight: 900;
             color: var(--color-white);
             background: linear-gradient(135deg, var(--color-button) 0%, rgb(217, 119, 6) 45%, rgb(245, 158, 11) 100%);
             border-radius: 999px;
-            
+
             &.show {
                 animation: xp-gain 2.5s ease-out forwards infinite;
             }
@@ -700,6 +695,7 @@ main {
 }
 
 @keyframes xp-gain {
+
     35%,
     65% {
         opacity: 1;
@@ -718,6 +714,7 @@ main {
 
 @media (width <=500px) {
     @keyframes xp-gain {
+
         35%,
         65% {
             opacity: 1;
