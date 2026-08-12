@@ -9,6 +9,7 @@ import type { User } from "../types/User.ts";
 import { calculateStreak } from "../helpers/calculateStreak.ts";
 
 import Header from "../components/Header.tsx";
+import Navigation from "../components/Navigation.tsx";
 
 const MainLayout = () => {
     const [streak, setStreak] = useState<number>(0);
@@ -40,6 +41,7 @@ const MainLayout = () => {
     return (
         <>
             <Header streak={streak} />
+            <Navigation />
             <Outlet context={{ user, setUser, streak, setStreak, }} />
         </>
     );
