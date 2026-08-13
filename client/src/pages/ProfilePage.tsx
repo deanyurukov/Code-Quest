@@ -6,7 +6,7 @@ import { calculateLevelProgress } from "../helpers/calculateLevelProgress.ts";
 import type { LevelProgress } from "../types/LevelProgress.ts";
 
 const ProfilePage = () => {
-    const { user, streak }: { user: User | null, streak: number } = useOutletContext();
+    const { user }: { user: User | null } = useOutletContext();
     const [ levelProgress, setLevelProgress ] = useState<LevelProgress | null>(null);
 
     useEffect(() => {
