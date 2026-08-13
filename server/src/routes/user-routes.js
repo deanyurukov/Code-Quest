@@ -60,6 +60,10 @@ router.put("/user/submission", async (req, res) => {
         return res.status(404).json({ error: "Question not found" });
     }
 
+    if (user?.answers.find(q => q.date === question?.date) !== undefined) {
+        return res.status(409).json({ error: "User has already answered this question" });
+    }
+
     user.answers.push({
         date,
         isCorrect,
