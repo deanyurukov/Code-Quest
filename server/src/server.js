@@ -7,7 +7,7 @@ import adminRoutes from "./routes/admin-routes.js";
 
 const app = express();
 const allowedOrigins = ["https://code-quest-daily.vercel.app", "http://localhost:3000", "http://192.168.1.6:3000"];
-const uri = process.env.URI_KEY || "mongodb://0.0.0.0:27017/Code-Quest";
+const uri = process.env.LOCAL_DB_URI_KEY || process.env.DEPLOYED_DB_URI_KEY;
 
 try {
     await mongoose.connect(uri);

@@ -107,6 +107,11 @@ const QuestionsPage = () => {
             setTimeout(() => {
                 setShowXpGain(false);
             }, 2500);
+
+            if (user) setUser(prev => {
+                prev!.xp += xpLevels[question?.difficulty!];
+                return prev;
+            });
         }
     }
 

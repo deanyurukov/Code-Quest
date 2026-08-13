@@ -20,7 +20,13 @@ const MainLayout = () => {
             let userExists: boolean = localStorage.getItem("accessToken") !== null;
 
             if (!userExists) {
-                localStorage.setItem("accessToken", JSON.stringify({ userId: (await post<{ userId: string }>(endpoints.anonymous)).userId }));
+                const token = await post<{ userId: string }>(endpoints.anonymous);
+                
+                if (!token.userId) {
+                    throw new Error("Error creating user");
+                }
+
+                localStorage.setItem("accessToken", JSON.stringify({ userId: token.userId }));
             }
 
             const userId = JSON.parse(localStorage.getItem("accessToken")!).userId;
