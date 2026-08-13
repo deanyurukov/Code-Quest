@@ -31,7 +31,7 @@ const ProfileUserInfo = ({ user, levelProgress }: { user: User | null, levelProg
                 </article>
 
                 <span>
-                    <div style={{ width: `${levelProgress?.percentage}%`, background: `${levelProgress?.tier.color}` }}></div>
+                    <div style={{ width: `${Math.max(levelProgress?.percentage || 0, 1.5)}%`, background: `${levelProgress?.tier.color}` }}></div>
                 </span>
             </section>
 
