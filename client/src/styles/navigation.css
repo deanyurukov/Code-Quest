@@ -36,13 +36,10 @@ nav {
                 color: var(--color-white);
             }
         }
-
-        &:not(:has(a.active)) {
-
-            svg,
-            a {
-                color: rgb(168, 162, 158);
-            }
+        
+        svg,
+        a {
+            color: rgb(168, 162, 158);
         }
 
         svg {
@@ -54,6 +51,10 @@ nav {
             font-weight: 900;
             font-size: 0.9em;
             line-height: 0.9em;
+        }
+
+        &:hover {
+            scale: 1.025;
         }
 
         &:active {

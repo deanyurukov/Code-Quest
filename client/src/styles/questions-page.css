@@ -1,32 +1,4 @@
 #questions-page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    gap: 2rem;
-
-    &>article {
-        display: flex;
-        flex-direction: column;
-        width: 80%;
-        background: var(--color-white);
-        border: 1px solid var(--color-border);
-        border-radius: var(--border-r);
-        padding: 2rem 2.5rem;
-
-        @media (width<=700px) {
-            padding: 1.25rem 1.5rem;
-        }
-
-        @media (width<=600px) {
-            width: 90%;
-        }
-
-        @media (width<=450px) {
-            width: 95%;
-        }
-    }
-
     .day {
         flex-direction: row;
         justify-content: space-between;
@@ -74,6 +46,11 @@
 
             &:active {
                 scale: 0.95;
+            }
+            
+            svg {
+                width: 1.5rem;
+                height: 1.5rem;
             }
 
             @media (width<=500px) {
@@ -420,6 +397,8 @@
                 aspect-ratio: 1 / 1;
 
                 svg {
+                    width: 1.5rem;
+                    height: 1.5rem;
                     color: var(--color-button);
                 }
             }
@@ -439,7 +418,7 @@
             font-family: var(--font-mono);
             font-size: 2.2rem;
 
-            @media (width<=410px) and (width>=380px) {
+            @media (width<=400px) {
                 font-size: 1.5rem;
             }
 

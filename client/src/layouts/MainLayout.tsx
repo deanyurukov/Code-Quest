@@ -43,6 +43,9 @@ const MainLayout = () => {
             <Header streak={streak} />
             <Navigation />
             <Outlet context={{ user, setUser, streak, setStreak, }} />
+            <footer>
+                <p>&copy; {new Date().getFullYear()} Code Quest</p>
+            </footer>
         </>
     );
 }

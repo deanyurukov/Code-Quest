@@ -1,0 +1,12 @@
+footer {
+    margin-top: 2rem;
+    margin-bottom: 4rem;
+
+    p {
+        font-family: var(--font-inter);
+        font-size: 0.9rem;
+        text-align: center;
+        color: rgb(196, 185, 154);
+        font-weight: 600;
+    }
+}

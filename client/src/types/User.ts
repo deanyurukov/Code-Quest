@@ -7,6 +7,7 @@ export type User = {
     password: string;
     answers: SavedAnswer[];
     xp: number;
+    isVerified: boolean;
     createdAt: string;
     updatedAt: string;
 };
