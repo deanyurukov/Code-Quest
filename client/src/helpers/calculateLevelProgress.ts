@@ -1,4 +1,4 @@
-const XP_PER_LEVEL = 300;
+const XP_PER_LEVEL = 150;
 const levelTiers = [
     {
         minLevel: 1,
@@ -13,7 +13,7 @@ const levelTiers = [
     {
         minLevel: 20,
         title: "Engineer",
-        color: "#9333EA"
+        color: "#7C3AED"
     },
     {
         minLevel: 30,
@@ -28,7 +28,7 @@ const levelTiers = [
     {
         minLevel: 50,
         title: "Legend",
-        color: "#EAB308"
+        color: "#CA8A04"
     }
 ] as const;
 
@@ -46,13 +46,14 @@ function getLevelTier(level: number) {
 }
 
 export function calculateLevelProgress(xp: number = 0) {
+    const currentLevelStart = (getLevel(xp) - 1) * XP_PER_LEVEL;
     const nextLevel = getNextLevelXp(xp);
     const tier = getLevelTier(getLevel(xp));
 
     return {
         current: xp,
         required: nextLevel,
-        percentage: (xp / nextLevel) * 100,
+        percentage: ((xp - currentLevelStart) / (nextLevel - currentLevelStart)) * 100,
         currentLevel: getLevel(xp),
         tier: tier,
     };

@@ -20,21 +20,18 @@ const ProfileUserInfo = ({ user, levelProgress }: { user: User | null, levelProg
 
             <section className="level-progress">
                 <article>
-                    {/* <span style={{ background: `${levelProgress?.tier.color}` }} >{levelProgress?.currentLevel}</span> */}
-                    <span style={{ background: `#7C3AED` }} >{levelProgress?.currentLevel}</span>
+                    <span style={{ background: `${levelProgress?.tier.color}` }} >{levelProgress?.currentLevel}</span>
 
                     <div>
-                        <h5>Level {levelProgress?.currentLevel} {levelProgress?.tier.title}</h5>
-                        <p>{levelProgress?.current} / {levelProgress?.required} XP</p>
+                        <h5>Level {levelProgress?.currentLevel} <span style={{ color: `${levelProgress?.tier.color}` }}>{levelProgress?.tier.title}</span></h5>
+                        <p>{levelProgress?.current} / {levelProgress?.required} XP to Level {(levelProgress?.currentLevel || 0) + 1}</p>
                     </div>
 
-                    <h6>{Math.round(levelProgress?.percentage || 0)}%</h6>
-                    {/* <h6 style={{ color: `#2563EB` }}>{Math.round(levelProgress?.percentage || 0)}%</h6> */}
+                    <h6 style={{ color: `${levelProgress?.tier.color}` }}>{(levelProgress?.percentage || 0).toFixed(1)}%</h6>
                 </article>
 
                 <span>
-                    <div style={{ width: `${levelProgress?.percentage}%` }}></div>
-                    {/* <div style={{ width: `${levelProgress?.percentage}%`, background: `#2563EB` }}></div> */}
+                    <div style={{ width: `${levelProgress?.percentage}%`, background: `${levelProgress?.tier.color}` }}></div>
                 </span>
             </section>
 
@@ -48,9 +45,9 @@ const ProfileUserInfo = ({ user, levelProgress }: { user: User | null, levelProg
                             <h5>Don't lose your progress!</h5>
                             <p>Create an account to save your streak, XP, and stats permanently.</p>
                         </div>
-
-                        <Link to={"/register"}>Create account</Link>
                     </article>
+
+                    <Link to={"/"}>Join the Battle, Warrior ⚔️</Link>
                 </section>
             }
         </article>

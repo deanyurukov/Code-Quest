@@ -151,9 +151,12 @@ const QuestionsPage = () => {
                                     </div>
                                     <div className={question?.difficulty}>
                                         <span>
-                                            {question?.difficulty === "Beginner" && "🌱"}
+                                            {/* {question?.difficulty === "Beginner" && "🌱"}
                                             {question?.difficulty === "Intermediate" && "⚔️"}
-                                            {question?.difficulty === "Advanced" && "💀"}
+                                            {question?.difficulty === "Advanced" && "💀"} */}
+                                            {question?.difficulty === "Beginner" && "🌱"}
+                                            {question?.difficulty === "Intermediate" && "🔥"}
+                                            {question?.difficulty === "Advanced" && "🩸"}
                                         </span>
                                         {question?.difficulty}
                                     </div>
