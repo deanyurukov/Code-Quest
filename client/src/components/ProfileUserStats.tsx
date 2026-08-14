@@ -19,22 +19,21 @@ const ProfileUserStats = ({ user, level, streak }: { user: User | null, level: n
         },
         {
             label: "accuracy",
-            value: `${otherStats?.accuracy ?? 0}%`,
+            value: `${(otherStats?.accuracy ?? 0).toFixed(1)}%`,
             icon: <svg style={{ color: "rgb(34, 197, 94)" }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>,
             iconBackground: "rgba(34, 197, 94, 0.094)"
         },
         {
-            label: "answered",
+            label: "total answered",
             value: otherStats?.questionsAnswered ?? 0,
             icon: <svg style={{ color: "rgb(59, 130, 246)" }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="4" x2="20" y1="9" y2="9"></line><line x1="4" x2="20" y1="15" y2="15"></line><line x1="10" x2="8" y1="3" y2="21"></line><line x1="16" x2="14" y1="3" y2="21"></line></svg>,
             iconBackground: "rgba(59, 130, 246, 0.094)"
         },
-        //! maybe change
         {
             label: "total xp",
             value: user?.xp ?? 0,
-            icon: <svg style={{ color: "rgb(217, 119, 6)" }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg>,
-            iconBackground: "rgba(217, 119, 6, 0.094)"
+            icon: <svg style={{ color: "rgb(220, 38, 38)" }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg>,
+            iconBackground: "rgba(220, 38, 38, 0.094)"
         },
         {
             label: "level",
