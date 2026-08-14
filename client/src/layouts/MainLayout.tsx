@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 
 import { get, post } from "../api/requester.ts";
 import { endpoints } from "../api/endpoints.ts";
@@ -15,6 +15,7 @@ const MainLayout = () => {
     const [streak, setStreak] = useState<number>(0);
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
+    const location = useLocation();
 
     async function getUserData(): Promise<void> {
         try {
@@ -48,6 +49,10 @@ const MainLayout = () => {
     useEffect(() => {
         void getUserData();
     }, []);
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [location]);
 
     return (
         <>

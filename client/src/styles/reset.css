@@ -12,6 +12,7 @@ html {
     scrollbar-width: thin;
     scrollbar-color: var(--color-button) var(--color-bg);
     overflow-y: scroll;
+    scroll-behavior: smooth;
 
     &::-webkit-scrollbar {
         width: 0.75rem;
