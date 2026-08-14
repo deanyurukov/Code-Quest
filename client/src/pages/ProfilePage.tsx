@@ -8,21 +8,27 @@ import { calculateLevelProgress } from "../helpers/calculateLevelProgress.ts";
 
 import ProfileUserInfo from "../components/ProfileUserInfo.tsx";
 import ProfileUserStats from "../components/ProfileUserStats.tsx";
+import Spinner from "../components/Spinner.tsx";
 
 const ProfilePage = () => {
-    const { user, streak }: { user: User | null, streak: number } = useOutletContext();
-    const [ levelProgress, setLevelProgress ] = useState<LevelProgress | null>(null);
+    const { user, streak, loading }: { user: User | null, streak: number, loading: boolean } = useOutletContext();
+    const [levelProgress, setLevelProgress] = useState<LevelProgress | null>(null);
 
     useEffect(() => {
         if (user) {
             setLevelProgress(calculateLevelProgress(user.xp));
         }
     }, [user]);
-    
+
     return (
         <main id="profile-page">
-            <ProfileUserInfo user={user} levelProgress={levelProgress} />
-            <ProfileUserStats user={user} level={levelProgress?.currentLevel || 0} streak={streak} />
+            {
+                loading ? <Spinner /> :
+                <>
+                    <ProfileUserInfo user={user} levelProgress={levelProgress} />
+                    <ProfileUserStats user={user} level={levelProgress?.currentLevel || 0} streak={streak} />
+                </>
+            }
         </main>
     );
 }

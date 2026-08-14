@@ -51,26 +51,26 @@ const ProfileUserStats = ({ user, level, streak }: { user: User | null, level: n
     }, [user]);
 
     return (
-        <>
+        <section className="user-stats">
             <h5>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" x2="18" y1="20" y2="10"></line><line x1="12" x2="12" y1="20" y2="4"></line><line x1="6" x2="6" y1="20" y2="14"></line></svg>
                 Statistics
             </h5>
 
-            <section>
+            <article>
                 {
                     cards.map((card, i) => (
-                        <article key={i}>
+                        <div key={i}>
                             <span style={{ background: `${card.iconBackground}` }}>
                                 {card.icon}
                             </span>
                             <h5>{card.value}</h5>
                             <p>{card.label}</p>
-                        </article>
+                        </div>
                     ))
                 }
-            </section>
-        </>
+            </article>
+        </section>
     );
 }
 

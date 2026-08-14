@@ -14,9 +14,11 @@ import Navigation from "../components/Navigation.tsx";
 const MainLayout = () => {
     const [streak, setStreak] = useState<number>(0);
     const [user, setUser] = useState<User | null>(null);
+    const [loading, setLoading] = useState<boolean>(false);
 
     async function getUserData(): Promise<void> {
         try {
+            setLoading(true);
             let userExists: boolean = localStorage.getItem("accessToken") !== null;
 
             if (!userExists) {
@@ -38,6 +40,9 @@ const MainLayout = () => {
         catch (e) {
             console.error(e);
         }
+        finally {
+            setLoading(false);
+        }
     }
 
     useEffect(() => {
@@ -48,7 +53,7 @@ const MainLayout = () => {
         <>
             <Header streak={streak} />
             <Navigation />
-            <Outlet context={{ user, setUser, streak, setStreak, }} />
+            <Outlet context={{ user, setUser, streak, setStreak, loading }} />
             <footer>
                 <p>&copy; {new Date().getFullYear()} Code Quest</p>
             </footer>
