@@ -4,4 +4,5 @@ export type SavedAnswer = {
     selected: number;
     answeredAt: string;
     correctAnswerIndex: number;
+    difficulty: "Beginner" | "Intermediate" | "Advanced";
 }

@@ -69,7 +69,8 @@ router.put("/user/submission", async (req, res) => {
         isCorrect,
         selected,
         answeredAt: getSofiaDateString(),
-        correctAnswerIndex: question.correctAnswerIndex
+        correctAnswerIndex: question.correctAnswerIndex,
+        difficulty: question.difficulty
     });
 
     user.answers = sortUserAnswers(user.answers);

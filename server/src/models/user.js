@@ -21,6 +21,10 @@ const savedAnswerSchema = new Schema(
         correctAnswerIndex: {
             type: Number,
             required: true
+        },
+        difficulty: {
+            type: String,
+            required: true
         }
     },
     { _id: false }
