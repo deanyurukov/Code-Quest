@@ -43,7 +43,7 @@ const QuestionsPage = () => {
         const wantedDay = new Date(question!.date);
         wantedDay.setDate(wantedDay.getDate() + offset);
 
-        const formattedDate = wantedDay.toISOString().split("T")[0];
+        const formattedDate = getSofiaDateString(wantedDay);
 
         try {
             setLoading(true);
@@ -120,10 +120,10 @@ const QuestionsPage = () => {
     }, []);
 
     useEffect(() => {
-        if (question) {
-            preSetAnswers(question);
-        }
-    }, [question]);
+        if (!question || !user) return;
+
+        preSetAnswers(question);
+    }, [question, user]);
 
     return (
         <>

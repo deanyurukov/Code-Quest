@@ -17,7 +17,7 @@ const MainLayout = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const location = useLocation();
 
-    async function getUserData(): Promise<void> {
+    async function getUserData() {
         try {
             setLoading(true);
             let userExists: boolean = localStorage.getItem("accessToken") !== null;
@@ -47,7 +47,7 @@ const MainLayout = () => {
     }
 
     useEffect(() => {
-        void getUserData();
+        getUserData();
     }, []);
 
     useEffect(() => {
