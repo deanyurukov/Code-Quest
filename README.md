@@ -9,6 +9,5 @@ Every day, users receive a new AI-generated multiple-choice programming question
 - 🎯 Four-answer multiple-choice format
 - 📅 New challenge every day
 - 📈 Planned streak and progress tracking
-- 💻 Future coding challenges and interview mode
 
 Built as a full-stack project using modern web technologies.
