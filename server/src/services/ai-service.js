@@ -51,7 +51,11 @@ export async function getAIResponse() {
                                     - The explanation must explain only why the correct answer is correct. Do not mention or compare the incorrect answers.
                                     - The explanation should teach the underlying concept rather than simply restating the answer.
 
-                                    Do not generate a question that matches any of the existing questions below. Also, avoid having more than 3 questions in a row with the same difficulty.
+                                    Do NOT generate a question that matches or is too similar to any of the existing questions below.
+                                    Avoid having more than 3 questions in a row with the same "difficulty" even if the proportion rule isn't met.
+                                    The proportion of questions of "difficulty" "Beginner" : "Intermediate" : "Advanced" should be 2 : 5 : 2.
+                                    Calculate it and generate a question of "difficulty" that is less than the supposed.
+                                    When it matches this proportion, generate an "Intermediate" question.
 
                                     Existing questions ordered from oldest to newest: ${alreadyExisting}.`
                             }
