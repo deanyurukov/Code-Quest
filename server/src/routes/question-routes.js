@@ -2,13 +2,18 @@ import express from "express";
 import { getQuestion } from "../services/question-service.js";
 import { getDayNumber, getSofiaDateString } from "../services/date-service.js";
 import formatResponse from "../helpers/responseFormatter.js";
+import { getAIResponse } from "../services/ai-service.js";
 
 const router = express.Router();
 
 router.get("/question/:date", async (req, res) => {
     const day = new Date(req.params.date);
-    const question = await getQuestion(day);
+    let question = await getQuestion(day);
 
+    if (!question && getSofiaDateString(day) === getSofiaDateString()) {
+        await getAIResponse();
+        question = await getQuestion(day);
+    }
     if (!question) {
         return res.status(404).json({ error: `No question found for day ${day}` });
     }
