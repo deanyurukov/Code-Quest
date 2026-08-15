@@ -9,8 +9,7 @@ const Countdown = () => {
             const time = getTimeUntilNextQuestion();
             setTimeLeft(time);
 
-
-            if (Number(time.hours) === 0 && Number(time.minutes) === 0 && Number(time.seconds) === 30) {
+            if (Number(time.hours) === 23 && Number(time.minutes) === 59 && Number(time.seconds) === 30) {
                 window.location.reload();
             }
         };

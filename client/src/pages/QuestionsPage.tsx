@@ -28,7 +28,7 @@ const QuestionsPage = () => {
     const [showXpGain, setShowXpGain] = useState<boolean>(false);
     const { user, setUser, setStreak }: { user: User | null, setUser: React.Dispatch<React.SetStateAction<User | null>>, setStreak: React.Dispatch<React.SetStateAction<number>> } = useOutletContext();
 
-    async function getQuestionData(): Promise<void> {
+    async function getQuestionData() {
         try {
             setLoading(true);
             const questionData = await get<Question>(endpoints.specific(getSofiaDateString()));
@@ -116,7 +116,7 @@ const QuestionsPage = () => {
     }
 
     useEffect(() => {
-        void getQuestionData();
+        getQuestionData();
     }, []);
 
     useEffect(() => {

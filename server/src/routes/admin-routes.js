@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import { getAIResponse } from "../services/ai-service.js";
+import { getQuestion } from "../services/question-service.js";
 
 const router = express.Router();
 
@@ -10,12 +11,18 @@ router.get("/admin/question/get", async (req, res) => {
             return res.status(401).json({ error: "Unauthorized" });
         }
 
+        const question = await getQuestion();
+
+        if (question) {
+            res.sendStatus(201)
+        }
+
         let lastError;
 
         for (let attempt = 1; attempt <= 4; attempt++) {
             try {
                 await getAIResponse();
-                return res.sendStatus(204);
+                return res.sendStatus(200);
             }
             catch (e) {
                 lastError = e;
@@ -41,7 +48,7 @@ router.get("/admin/health", async (req, res) => {
         return res.status(401).json({ error: "Unauthorized" });
     }
 
-    res.sendStatus(204);
+    res.sendStatus(200);
 });
 
 export default router;
