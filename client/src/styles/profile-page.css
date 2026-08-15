@@ -170,6 +170,15 @@
                 background: linear-gradient(135deg, rgb(180, 83, 9), rgb(217, 119, 6));
                 box-shadow: rgba(217, 119, 6, 0.35) 0px 4px 12px;
                 text-align: center;
+                transition: all 0.2s linear;
+
+                &:hover {
+                    scale: 1.015;
+                }
+
+                &:active {
+                    scale: 0.985;
+                }
             }
         }
     }
