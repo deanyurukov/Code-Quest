@@ -433,7 +433,7 @@
                     font-family: var(--font-inter);
                     font-weight: 700;
                     letter-spacing: 0.1rem;
-                    color: rgb(168, 162, 158);
+                    color: var(--color-gray);
                     text-transform: uppercase;
                     text-align: center;
 

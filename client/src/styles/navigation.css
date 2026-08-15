@@ -39,7 +39,7 @@ nav {
         
         svg,
         a {
-            color: rgb(168, 162, 158);
+            color: var(--color-gray);
         }
 
         svg {

@@ -10,8 +10,25 @@ router.get("/admin/question/get", async (req, res) => {
             return res.status(401).json({ error: "Unauthorized" });
         }
 
-        await getAIResponse();
-        res.sendStatus(204);
+        let lastError;
+
+        for (let attempt = 1; attempt <= 4; attempt++) {
+            try {
+                await getAIResponse();
+                return res.sendStatus(204);
+            }
+            catch (e) {
+                lastError = e;
+
+                console.error(`AI request failed (attempt ${attempt}/4):`, e);
+
+                if (attempt < 4) {
+                    await new Promise(resolve => setTimeout(resolve, attempt * 5000));
+                }
+            }
+        }
+
+        throw lastError;
     }
     catch (e) {
         console.error(e);
