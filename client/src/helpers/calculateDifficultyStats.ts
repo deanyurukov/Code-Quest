@@ -5,17 +5,23 @@ export function calculateDifficultyStats(answers: SavedAnswer[]) {
         Beginner: {
             answered: 0,
             correct: 0,
-            accuracy: 0
+            accuracy: 0,
+            difficulty: "Beginner",
+            color: "rgb(22, 163, 74)"
         },
         Intermediate: {
             answered: 0,
             correct: 0,
-            accuracy: 0
+            accuracy: 0,
+            difficulty: "Intermediate",
+            color: "rgb(217, 119, 6)"
         },
         Advanced: {
             answered: 0,
             correct: 0,
-            accuracy: 0
+            accuracy: 0,
+            difficulty: "Advanced",
+            color: "rgb(220, 38, 38)"
         }
     };
 

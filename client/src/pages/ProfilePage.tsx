@@ -9,6 +9,7 @@ import { calculateLevelProgress } from "../helpers/calculateLevelProgress.ts";
 import ProfileUserInfo from "../components/ProfileUserInfo.tsx";
 import ProfileUserStats from "../components/ProfileUserStats.tsx";
 import Spinner from "../components/Spinner.tsx";
+import ProfileUserDifficulty from "../components/ProfileUserDifficulty.tsx";
 
 const ProfilePage = () => {
     const { user, streak, loading }: { user: User | null, streak: number, loading: boolean } = useOutletContext();
@@ -27,6 +28,7 @@ const ProfilePage = () => {
                 <>
                     <ProfileUserInfo user={user} levelProgress={levelProgress} />
                     <ProfileUserStats user={user} level={levelProgress?.currentLevel || 0} streak={streak} />
+                    <ProfileUserDifficulty answers={user?.answers ?? null} />
                 </>
             }
         </main>
