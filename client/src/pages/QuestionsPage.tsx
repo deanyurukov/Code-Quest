@@ -120,6 +120,10 @@ const QuestionsPage = () => {
     }, []);
 
     useEffect(() => {
+        setShowXpGain(false);
+    }, [question]);
+
+    useEffect(() => {
         if (!question || !user) return;
 
         preSetAnswers(question);
