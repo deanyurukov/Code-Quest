@@ -47,7 +47,7 @@ const ProfileUserInfo = ({ user, levelProgress }: { user: User | null, levelProg
                         </div>
                     </article>
 
-                    <Link to={"/"}>Join the Battle, Warrior ⚔️</Link>
+                    <Link to={"/auth"}>Join the Battle, Warrior ⚔️</Link>
                 </section>
             }
         </article>

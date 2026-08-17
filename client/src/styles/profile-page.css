@@ -14,7 +14,7 @@
 
         h3,
         h5 {
-            color: rgb(28, 18, 8);
+            color: var(--color-black);
         }
 
         h5 {
@@ -191,7 +191,7 @@
 
         h5 {
             font-family: var(--font-nunito);
-            color: rgb(28, 18, 8);
+            color: var(--color-black);
             font-weight: 900;
         }
 
@@ -279,7 +279,7 @@
             }
 
             h3 {
-                color: rgb(28, 18, 8);
+                color: var(--color-black);
                 font-weight: 900;
                 font-size: 1.1rem;
                 line-height: 1.1rem;
@@ -310,7 +310,7 @@
                         justify-content: space-between;
 
                         h5 {
-                            color: rgb(28, 18, 8);
+                            color: var(--color-black);
                             font-weight: 700;
                             font-size: 0.95rem;
                             line-height: 0.95rem;

@@ -1,0 +1,114 @@
+.auth-page {
+    font-family: var(--font-nunito);
+    margin: 1rem 0;
+
+    svg {
+        width: 1rem;
+        height: 1rem;
+    }
+
+    a {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.5rem;
+        color: rgb(180, 83, 9);
+        font-weight: 700;
+        font-size: 1rem;
+        padding: 0;
+        transition: all 0.15s linear;
+
+        &:hover {
+            opacity: 0.7;
+        }
+    }
+
+    article {
+        gap: 2rem;
+        align-items: center;
+
+        form, p {
+            width: 80%;
+
+            @media (width <= 600px) {
+                width: 90%;
+            }
+
+            @media (width <= 400px) {
+                width: 100%;
+            }
+        }
+
+        section {
+            width: fit-content;
+            background: rgb(254, 249, 238);
+            border: 1.5px solid rgba(217, 119, 6, 0.18);
+            border-radius: 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            padding: 0.25rem 0.5rem;
+
+            button {
+                color: var(--color-gray);
+                font-weight: 900;
+                font-size: 1rem;
+                border-radius: var(--border-r);
+                cursor: pointer;
+                padding: 0.5rem 1.5rem;
+
+                &.active {
+                    color: var(--color-black);
+                    background: var(--color-white);
+                    box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 4px;
+                }
+
+                &:hover {
+                    scale: 1.025;
+                }
+
+                &:active {
+                    scale: 0.95;
+                }
+            }
+        }
+
+        p {
+            color: rgb(220, 38, 38);
+            font-family: var(--font-inter);
+            font-weight: 600;
+            border: 1px solid rgb(252, 165, 165);
+            border-radius: 1.25rem;
+            background: rgb(254, 242, 242);
+            padding: 0.75rem;
+            padding-left: 1rem;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+
+            button {
+                background: linear-gradient(135deg, rgb(180, 83, 9), rgb(217, 119, 6), rgb(245, 158, 11));
+                box-shadow: rgba(217, 119, 6, 0.35) 0px 6px 20px;
+                cursor: pointer;
+                color: var(--color-white);
+                font-size: 1.2rem;
+                font-weight: 900;
+                border-radius: 1.25rem;
+                padding: 1rem 0;
+                margin-top: 1rem;
+
+                &:hover {
+                    scale: 1.010;
+                }
+
+                &:active {
+                    scale: 0.990;
+                }
+            }
+        }
+    }
+}
