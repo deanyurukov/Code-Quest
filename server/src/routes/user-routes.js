@@ -138,7 +138,7 @@ router.post("/user/register", async (req, res) => {
 });
 
 router.post("/user/login", async (req, res) => {
-    const { email, password } = req.body;
+    const { email, password, id } = req.body;
 
     const user = await User.findOne({ email: email.trim() });
     if (!user) {
@@ -152,6 +152,7 @@ router.post("/user/login", async (req, res) => {
     }
 
     try {
+        await User.findByIdAndDelete(id);
         delete user.password;
         return res.status(200).json(user);
     }

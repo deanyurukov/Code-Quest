@@ -41,9 +41,9 @@ const AuthPage = () => {
             }
 
             if (isLoginOpen) {
-                const user: User = await post(endpoints.login, { email, password });
-                setUser(user);
-                localStorage.setItem("accessToken", user._id);
+                const newUser: User = await post(endpoints.login, { id: user?._id, email, password });
+                setUser(newUser);
+                localStorage.setItem("accessToken", newUser._id);
             }
             else {
                 const data: { email: string, username: string } = await post(endpoints.register, { id: user?._id, email, username, password });
