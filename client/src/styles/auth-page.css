@@ -27,14 +27,15 @@
         gap: 2rem;
         align-items: center;
 
-        form, p {
+        form,
+        p {
             width: 80%;
 
-            @media (width <= 600px) {
+            @media (width <=600px) {
                 width: 90%;
             }
 
-            @media (width <= 400px) {
+            @media (width <=400px) {
                 width: 100%;
             }
         }
@@ -107,6 +108,22 @@
 
                 &:active {
                     scale: 0.990;
+                }
+
+                &:disabled {
+                    background: rgb(245, 245, 240);
+                    border: 1.5px solid rgb(229, 224, 216);
+                    color: rgb(196, 186, 168);
+                    cursor: not-allowed;
+                    box-shadow: none;
+
+                    &:hover {
+                        scale: 1;
+                    }
+
+                    &:active {
+                        scale: 1;
+                    }
                 }
             }
         }

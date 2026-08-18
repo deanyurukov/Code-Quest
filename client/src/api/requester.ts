@@ -48,6 +48,7 @@ async function requester<T>(path: string, options: RequestOptions = {}): Promise
         const err: any = new Error(res.statusText || 'Request failed');
         err.status = res.status;
         err.data = data;
+        err.message = data.message;
         throw err;
     }
 

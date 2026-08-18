@@ -3,6 +3,8 @@ import type { User } from "../types/User.ts";
 import { useEffect, useRef, useState } from "react";
 import FormInput from "../components/FormInput.tsx";
 import FormPasswordInput from "../components/FormPasswordInput.tsx";
+import { post } from "../api/requester.ts";
+import { endpoints } from "../api/endpoints.ts";
 
 const AuthPage = () => {
     const { user }: { user: User | null } = useOutletContext();
@@ -11,11 +13,56 @@ const AuthPage = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const formRef = useRef<HTMLFormElement | null>(null);
+    const [loading, setLoading] = useState(false);
 
     function changeOpenTab(): void {
         setIsLoginOpen(prev => prev = !prev);
         setError(null);
         formRef.current?.reset();
+    }
+
+    async function submitForm(e: any) {
+        if (loading) {
+            return;
+        }
+
+        setLoading(true);
+
+        e.preventDefault();
+        const formData = new FormData(formRef.current!);
+
+        const email = formData.get("email") as string;
+        const username = formData.get("username") as string | null;
+        const password = formData.get("password") as string;
+
+        try {
+            if (password.length <= 7 || password.length >= 101) {
+                throw new Error("Password must be between 8 and 100 characters long");
+            }
+
+            if (isLoginOpen) {
+
+            }
+            else {
+                const data: { email: string, username: string } = await post(endpoints.register, { id: user?._id, email, username, password });
+
+                if (user) {
+                    user.email = data.email;
+                    user.username = data.username;
+                    user.isVerified = true;
+                }
+            }
+
+            navigate("/profile");
+            setError(null);
+        }
+        catch (e: any) {
+            setError(e.message);
+            throw new Error(e);
+        }
+        finally {
+            setLoading(false);
+        }
     }
 
     useEffect(() => {
@@ -39,17 +86,13 @@ const AuthPage = () => {
 
                 {error && <p>{error}</p>}
 
-                <form ref={formRef}>
+                <form ref={formRef} onSubmit={submitForm}>
                     {!isLoginOpen && <FormInput label="Username" type="text" name="username" placeholder="ProCoder_42" />}
 
                     <FormInput label="Email" type="email" name="email" placeholder="you@example.com" />
                     <FormPasswordInput />
 
-                    {
-                        isLoginOpen ?
-                            <button type="submit">Log in</button> :
-                            <button type="submit">Start your quest</button>
-                    }
+                    <button disabled={loading} type="submit">{isLoginOpen ? "Log in" : "Start your quest"}</button>
                 </form>
             </article>
         </main>

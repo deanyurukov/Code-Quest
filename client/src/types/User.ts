@@ -4,10 +4,10 @@ export type User = {
     _id: string;
     username: string;
     email: string;
-    password: string;
     answers: SavedAnswer[];
     xp: number;
     isVerified: boolean;
+    joinedOn: Date,
     createdAt: string;
     updatedAt: string;
 };
