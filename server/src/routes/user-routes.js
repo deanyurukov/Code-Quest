@@ -131,7 +131,31 @@ router.post("/user/register", async (req, res) => {
             username: user.username
         });
     }
-    catch(e) {
+    catch (e) {
+        console.error(e);
+        return res.status(400).json({ message: getErrorMessage(e) });
+    }
+});
+
+router.post("/user/login", async (req, res) => {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email: email.trim() });
+    if (!user) {
+        return res.status(404).send({ message: 'Account with this email does not exist' });
+    }
+
+    const passwordCorrect = await bcrypt.compare(password, user.password);
+
+    if (!passwordCorrect) {
+        return res.status(401).json({ message: "Wrong password" });
+    }
+
+    try {
+        delete user.password;
+        return res.status(200).json(user);
+    }
+    catch (e) {
         console.error(e);
         return res.status(400).json({ message: getErrorMessage(e) });
     }

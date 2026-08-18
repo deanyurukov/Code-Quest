@@ -35,14 +35,13 @@ const MainLayout = () => {
                     throw new Error("Error creating user");
                 }
 
-                localStorage.setItem("accessToken", JSON.stringify({ userId: token.userId }));
+                localStorage.setItem("accessToken", token.userId);
             }
 
-            const userId = JSON.parse(localStorage.getItem("accessToken")!).userId;
+            const userId = localStorage.getItem("accessToken")!;
             const user = await get<User>(endpoints.user, { id: userId });
 
             setUser(user);
-            setStreak(calculateStreak(user.answers));
             
             errorCount = 0;
         }
@@ -60,6 +59,12 @@ const MainLayout = () => {
     useEffect(() => {
         getUserData();
     }, []);
+
+    useEffect(() => {
+        if (user) {
+            setStreak(calculateStreak(user.answers));
+        }
+    }, [user]);
 
     useEffect(() => {
         window.scrollTo(0, 0);

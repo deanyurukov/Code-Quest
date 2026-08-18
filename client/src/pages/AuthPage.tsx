@@ -7,7 +7,7 @@ import { post } from "../api/requester.ts";
 import { endpoints } from "../api/endpoints.ts";
 
 const AuthPage = () => {
-    const { user }: { user: User | null } = useOutletContext();
+    const { user, setUser }: { user: User | null, setUser: React.Dispatch<React.SetStateAction<User | null>> } = useOutletContext();
     const [isLoginOpen, setIsLoginOpen] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const location = useLocation();
@@ -41,7 +41,9 @@ const AuthPage = () => {
             }
 
             if (isLoginOpen) {
-
+                const user: User = await post(endpoints.login, { email, password });
+                setUser(user);
+                localStorage.setItem("accessToken", user._id);
             }
             else {
                 const data: { email: string, username: string } = await post(endpoints.register, { id: user?._id, email, username, password });
@@ -92,7 +94,7 @@ const AuthPage = () => {
                     <FormInput label="Email" type="email" name="email" placeholder="you@example.com" />
                     <FormPasswordInput />
 
-                    <button disabled={loading} type="submit">{isLoginOpen ? "Log in" : "Start your quest"}</button>
+                    <button disabled={loading} type="submit">{isLoginOpen ? loading ? "Logging In..." : "Log in" : loading ? "Creating account..." : "Start your quest"}</button>
                 </form>
             </article>
         </main>
