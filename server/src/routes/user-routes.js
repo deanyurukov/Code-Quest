@@ -30,7 +30,15 @@ router.get("/user", async (req, res) => {
 
 router.post("/user/anonymous", async (req, res) => {
     try {
-        const user = await User.create({});
+        let user = await User.findOne({
+            isVerified: false,
+            answers: { $size: 0 }
+        });
+
+        if (!user) {
+            user = await User.create({});
+        }
+
         res.status(201).json({ userId: user._id });
     }
     catch (e) {

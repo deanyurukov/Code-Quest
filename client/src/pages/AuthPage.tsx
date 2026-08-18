@@ -19,7 +19,6 @@ const AuthPage = () => {
     }
 
     useEffect(() => {
-        setError("Enter a valid email address.");
         if (user && user?.isVerified) {
             navigate("/profile");
         }

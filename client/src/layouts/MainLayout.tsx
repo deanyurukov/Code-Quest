@@ -16,8 +16,14 @@ const MainLayout = () => {
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const location = useLocation();
+    let errorCount = 0;
 
     async function getUserData() {
+        if (errorCount >= 4) {
+            alert("Something went wrong. Please try again later.");
+            return;
+        }
+
         try {
             setLoading(true);
             let userExists: boolean = localStorage.getItem("accessToken") !== null;
@@ -37,9 +43,14 @@ const MainLayout = () => {
 
             setUser(user);
             setStreak(calculateStreak(user.answers));
+            
+            errorCount = 0;
         }
         catch (e) {
             console.error(e);
+            localStorage.removeItem("accessToken");
+            errorCount++;
+            await getUserData();
         }
         finally {
             setLoading(false);
