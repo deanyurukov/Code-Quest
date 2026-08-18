@@ -26,7 +26,7 @@ const QuestionsPage = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [correctAnswerIndex, setCorrectAnswerIndex] = useState<number | null>(null);
     const [showXpGain, setShowXpGain] = useState<boolean>(false);
-    const { user, setUser, setStreak }: { user: User | null, setUser: React.Dispatch<React.SetStateAction<User | null>>, setStreak: React.Dispatch<React.SetStateAction<number>> } = useOutletContext();
+    const { user, setUser }: { user: User | null, setUser: React.Dispatch<React.SetStateAction<User | null>> } = useOutletContext();
 
     async function getQuestionData() {
         try {
@@ -97,8 +97,6 @@ const QuestionsPage = () => {
                     answers: newAnswers
                 };
             });
-
-            setStreak(calculateStreak(newAnswers));
         }
 
         if (isCorrect) {
@@ -108,10 +106,12 @@ const QuestionsPage = () => {
                 setShowXpGain(false);
             }, 2500);
 
-            if (user) setUser(prev => {
-                prev!.xp += xpLevels[question?.difficulty!];
-                return prev;
-            });
+            if (user) {
+                setUser(prev => {
+                    prev!.xp += xpLevels[question?.difficulty!];
+                    return prev;
+                });
+            }
         }
     }
 

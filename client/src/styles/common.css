@@ -1,0 +1,48 @@
+.input {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    width: 100%;
+
+    label {
+        font-family: var(--font-nunito);
+        color: var(--color-black);
+        font-size: 1rem;
+        font-weight: 900;
+    }
+
+    input {
+        background: transparent;
+        border: none;
+        padding: 0.75rem 1rem;
+        background: rgb(254, 249, 238);
+        border: 2px solid rgba(217, 119, 6, 0.18);
+        border-radius: 1.25rem;
+        font-family: var(--font-inter);
+        font-size: 0.9rem;
+        outline: none;
+
+        &:focus {
+            border: 2px solid rgb(217, 119, 6);
+            box-shadow: rgba(217, 119, 6, 0.1) 0px 0px 0px 3px;
+        }
+    }
+
+    .password {
+        position: relative;
+
+        input {
+            width: 100%;
+        }
+
+        svg {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 0.75rem;
+            z-index: 1000;
+            cursor: pointer;
+            background: rgb(254, 249, 238);
+        }
+    }
+}

@@ -6,4 +6,6 @@ export const endpoints = {
     user: `${baseUrl}/user`,
     anonymous: `${baseUrl}/user/anonymous`,
     submitAnswer: `${baseUrl}/user/submission`,
+    register: `${baseUrl}/user/register`,
+    login: `${baseUrl}/user/login`
 };

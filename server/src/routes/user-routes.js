@@ -3,6 +3,8 @@ import User from "../models/user.js";
 import { getQuestion } from "../services/question-service.js";
 import { getSofiaDateString } from "../services/date-service.js";
 import { sortUserAnswers } from "../services/user-service.js";
+import bcrypt from "bcrypt";
+import { getErrorMessage } from "../services/error-service.js";
 
 const router = express.Router();
 
@@ -30,7 +32,15 @@ router.get("/user", async (req, res) => {
 
 router.post("/user/anonymous", async (req, res) => {
     try {
-        const user = await User.create({});
+        let user = await User.findOne({
+            isVerified: false,
+            answers: { $size: 0 }
+        });
+
+        if (!user) {
+            user = await User.create({});
+        }
+
         res.status(201).json({ userId: user._id });
     }
     catch (e) {
@@ -82,6 +92,73 @@ router.put("/user/submission", async (req, res) => {
     await user.save();
 
     res.json(user.answers);
+});
+
+router.post("/user/register", async (req, res) => {
+    const { id, username, email, password } = req.body;
+
+    if (!id) {
+        return res.status(400).json({ error: "User id is required" });
+    }
+
+    const user = await User.findById(id);
+    if (!user) {
+        return res.status(404).json({ error: "User not found" });
+    }
+
+    const userWithEmailExists = await User.countDocuments({ email: email.trim() });
+    if (userWithEmailExists !== 0) {
+        return res.status(409).json({ message: 'Account with email already exists' });
+    }
+
+    const userWithUsernameExists = await User.countDocuments({ username: username.trim() });
+    if (userWithUsernameExists !== 0) {
+        return res.status(409).json({ message: 'Account with username already exists' });
+    }
+
+    try {
+        user.email = email.trim();
+        user.username = username.trim();
+        user.password = await bcrypt.hash(password, Number(process.env.BCRYPT_SALT));
+        user.isVerified = true;
+        user.joinedOn = new Date();
+
+        await user.validate();
+        await user.save();
+
+        return res.status(201).json({
+            email: user.email,
+            username: user.username
+        });
+    }
+    catch (e) {
+        console.error(e);
+        return res.status(400).json({ message: getErrorMessage(e) });
+    }
+});
+
+router.post("/user/login", async (req, res) => {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email: email.trim() });
+    if (!user) {
+        return res.status(404).send({ message: 'Account with this email does not exist' });
+    }
+
+    const passwordCorrect = await bcrypt.compare(password, user.password);
+
+    if (!passwordCorrect) {
+        return res.status(401).json({ message: "Wrong password" });
+    }
+
+    try {
+        delete user.password;
+        return res.status(200).json(user);
+    }
+    catch (e) {
+        console.error(e);
+        return res.status(400).json({ message: getErrorMessage(e) });
+    }
 });
 
 export default router;

@@ -14,7 +14,7 @@
 
         h3,
         h5 {
-            color: rgb(28, 18, 8);
+            color: var(--color-black);
         }
 
         h5 {
@@ -35,14 +35,54 @@
             justify-content: start;
             gap: 1.5rem;
 
-            span {
-                border: 2px dashed rgba(217, 119, 6, 0.314);
-                background: rgb(254, 249, 238);
+            &>article:not(.user-details) {
                 border-radius: var(--border-r);
-                padding: 1.15rem;
                 display: flex;
                 justify-content: center;
                 align-items: center;
+            }
+
+            .logged-in {
+                position: relative;
+                background: linear-gradient(135deg, rgb(180, 83, 9), rgb(217, 119, 6), rgb(245, 158, 11));
+                box-shadow: rgba(217, 119, 6, 0.35) 0px 4px 16px;
+                aspect-ratio: 1 / 1;
+                width: 4.8rem;
+
+                span {
+                    position: absolute;
+                    padding: 0.2rem;
+                    background: rgb(34, 197, 94);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border: 2px solid var(--color-white);
+                    border-radius: 100%;
+                    bottom: 0;
+                    right: 0;
+                    transform: translateY(25%) translateX(25%);
+
+                    svg {
+                        color: var(--color-white);
+                        width: 1rem;
+                        height: 1rem;
+                    }
+                }
+
+                p {
+                    font-family: var(--font-nunito);
+                    color: var(--color-white);
+                    font-weight: 900;
+                    font-size: 2rem;
+                    line-height: 1.75rem;
+                    text-transform: uppercase;
+                }
+            }
+
+            .guest {
+                border: 2px dashed rgba(217, 119, 6, 0.314);
+                background: rgb(254, 249, 238);
+                padding: 1.15rem;
 
                 svg {
                     color: rgb(217, 119, 6);
@@ -51,15 +91,34 @@
                 }
             }
 
-            div {
+            .user-details {
                 display: flex;
                 flex-direction: column;
                 gap: 0.5rem;
+                width: 100%;
 
                 h3 {
-                    font-size: 1.3rem;
+                    font-size: 1.5rem;
                     font-weight: 900;
-                    line-height: 1.3rem;
+                    line-height: 1.5rem;
+                }
+
+                div {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.45rem;
+
+                    p {
+                        display: flex;
+                        align-items: center;
+                        gap: 0.5rem;
+
+                        svg {
+                            color: var(--color-gray);
+                            width: 0.8rem;
+                            height: 0.8rem;
+                        }
+                    }
                 }
             }
         }
@@ -69,6 +128,7 @@
             background: rgba(217, 119, 6, 0.18);
             width: 100%;
             height: 1.5px;
+            margin: 0.4rem 0;
         }
 
         .level-progress {
@@ -181,6 +241,36 @@
                 }
             }
         }
+
+        &>button {
+            width: 100%;
+            background: rgb(254, 249, 238);
+            border: 1px solid rgba(217, 119, 6, 0.18);
+            border-radius: 1.25rem;
+            color: rgb(120, 113, 108);
+            font-weight: 900;
+            font-family: var(--font-nunito);
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 0;
+            cursor: pointer;
+
+            &:hover {
+                color: rgba(120, 113, 108, 0.75);
+            }
+
+            &:active {
+                scale: 0.985;
+            }
+
+            svg {
+                width: 1rem;
+                height: 1rem;
+            }
+        }
     }
 
     .user-stats {
@@ -191,7 +281,7 @@
 
         h5 {
             font-family: var(--font-nunito);
-            color: rgb(28, 18, 8);
+            color: var(--color-black);
             font-weight: 900;
         }
 
@@ -279,7 +369,7 @@
             }
 
             h3 {
-                color: rgb(28, 18, 8);
+                color: var(--color-black);
                 font-weight: 900;
                 font-size: 1.1rem;
                 line-height: 1.1rem;
@@ -310,7 +400,7 @@
                         justify-content: space-between;
 
                         h5 {
-                            color: rgb(28, 18, 8);
+                            color: var(--color-black);
                             font-weight: 700;
                             font-size: 0.95rem;
                             line-height: 0.95rem;

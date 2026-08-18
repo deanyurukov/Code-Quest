@@ -16,8 +16,14 @@ const MainLayout = () => {
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const location = useLocation();
+    let errorCount = 0;
 
     async function getUserData() {
+        if (errorCount >= 4) {
+            alert("Something went wrong. Please try again later.");
+            return;
+        }
+
         try {
             setLoading(true);
             let userExists: boolean = localStorage.getItem("accessToken") !== null;
@@ -29,17 +35,21 @@ const MainLayout = () => {
                     throw new Error("Error creating user");
                 }
 
-                localStorage.setItem("accessToken", JSON.stringify({ userId: token.userId }));
+                localStorage.setItem("accessToken", token.userId);
             }
 
-            const userId = JSON.parse(localStorage.getItem("accessToken")!).userId;
+            const userId = localStorage.getItem("accessToken")!;
             const user = await get<User>(endpoints.user, { id: userId });
 
             setUser(user);
-            setStreak(calculateStreak(user.answers));
+            
+            errorCount = 0;
         }
         catch (e) {
             console.error(e);
+            localStorage.removeItem("accessToken");
+            errorCount++;
+            await getUserData();
         }
         finally {
             setLoading(false);
@@ -49,6 +59,12 @@ const MainLayout = () => {
     useEffect(() => {
         getUserData();
     }, []);
+
+    useEffect(() => {
+        if (user) {
+            setStreak(calculateStreak(user.answers));
+        }
+    }, [user]);
 
     useEffect(() => {
         window.scrollTo(0, 0);

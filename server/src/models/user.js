@@ -35,10 +35,26 @@ const userSchema = new Schema(
         username: {
             type: String,
             default: "",
+            validate: {
+                validator: function (value) {
+                    if (!this.isVerified && value === "") return true;
+
+                    return value.length >= 3 && value.length <= 20;
+                },
+                message: "Username must be between 3 and 20 characters long"
+            }
         },
         email: {
             type: String,
             default: "",
+            validate: {
+                validator: function (value) {
+                    if (!this.isVerified && value === "") return true;
+
+                    return value.length >= 5 && value.length <= 100;
+                },
+                message: "Email must be between 5 and 100 characters long"
+            }
         },
         password: {
             type: String,
@@ -56,6 +72,10 @@ const userSchema = new Schema(
             type: Number,
             default: 0,
             min: 0
+        },
+        joinedOn: {
+            type: Date,
+            default: new Date()
         }
     },
     {
