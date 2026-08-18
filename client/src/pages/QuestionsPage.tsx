@@ -7,7 +7,6 @@ import type { SavedAnswer } from '../types/SavedAnswer.ts';
 import type { Question } from '../types/Question.ts';
 import type { User } from '../types/User.ts';
 
-import { calculateStreak } from '../helpers/calculateStreak.ts';
 import { getSofiaDateString } from '../helpers/getSofiaDateString.ts';
 
 import Countdown from '../components/Countdown.tsx';
