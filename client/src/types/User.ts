@@ -7,7 +7,7 @@ export type User = {
     answers: SavedAnswer[];
     xp: number;
     isVerified: boolean;
-    joinedOn: Date,
+    joinedOn: string;
     createdAt: string;
     updatedAt: string;
 };
