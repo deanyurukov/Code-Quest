@@ -73,8 +73,8 @@
                     font-family: var(--font-nunito);
                     color: var(--color-white);
                     font-weight: 900;
-                    font-size: 2rem;
-                    line-height: 1.75rem;
+                    font-size: 1.8rem;
+                    line-height: 1.8rem;
                     text-transform: uppercase;
                 }
             }

@@ -14,6 +14,7 @@ import QuestionExplanation from '../components/QuestionExplanation.tsx';
 import Answer from '../components/Answer.tsx';
 import Spinner from '../components/Spinner.tsx';
 import { useOutletContext } from 'react-router-dom';
+import PageTitle from '../components/PageTitle.tsx';
 
 const QuestionsPage = () => {
     const letters: string[] = ["A", "B", "C", "D"] as const;
@@ -129,73 +130,73 @@ const QuestionsPage = () => {
     }, [question, user]);
 
     return (
-        <>
-            <main id='questions-page'>
-                <article className="day">
-                    <button disabled={question?.previousExists === false || loading} onClick={() => getDiffQuestion(-1)} >
-                        <span>
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"></path></svg>
-                        </span>
-                    </button>
-                    <h2>Day {loading ? "..." : question?.dayNumber}</h2>
-                    <button disabled={question?.nextExists === false || loading} onClick={() => getDiffQuestion(1)} >
-                        <span>
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"></path></svg>
-                        </span>
-                    </button>
-                </article>
+        <main id="questions-page">
+            <PageTitle title="Questions" />
 
-                {
-                    loading ? <Spinner /> :
-                        <article className="question-card">
-                            <div className={`xp-gain ${showXpGain ? "show" : ""}`}>
-                                +{xpLevels[question?.difficulty!]} XP
-                            </div>
+            <article className="day">
+                <button disabled={question?.previousExists === false || loading} onClick={() => getDiffQuestion(-1)} >
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"></path></svg>
+                    </span>
+                </button>
+                <h2>Day {loading ? "..." : question?.dayNumber}</h2>
+                <button disabled={question?.nextExists === false || loading} onClick={() => getDiffQuestion(1)} >
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"></path></svg>
+                    </span>
+                </button>
+            </article>
 
-                            <section className="question-info">
-                                <article>
-                                    <div>
-                                        {question?.topic}
-                                    </div>
-                                    <div className={question?.difficulty}>
-                                        <span>
-                                            {/* {question?.difficulty === "Beginner" && "🌱"}
+            {
+                loading ? <Spinner /> :
+                    <article className="question-card">
+                        <div className={`xp-gain ${showXpGain ? "show" : ""}`}>
+                            +{xpLevels[question?.difficulty!]} XP
+                        </div>
+
+                        <section className="question-info">
+                            <article>
+                                <div>
+                                    {question?.topic}
+                                </div>
+                                <div className={question?.difficulty}>
+                                    <span>
+                                        {/* {question?.difficulty === "Beginner" && "🌱"}
                                             {question?.difficulty === "Intermediate" && "⚔️"}
                                             {question?.difficulty === "Advanced" && "💀"} */}
-                                            {question?.difficulty === "Beginner" && "🌱"}
-                                            {question?.difficulty === "Intermediate" && "🔥"}
-                                            {question?.difficulty === "Advanced" && "🩸"}
-                                        </span>
-                                        {question?.difficulty}
-                                    </div>
-                                </article>
-                                <article>
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg>
-                                    <p>+{xpLevels[question?.difficulty!]} XP</p>
-                                </article>
-                            </section>
+                                        {question?.difficulty === "Beginner" && "🌱"}
+                                        {question?.difficulty === "Intermediate" && "🔥"}
+                                        {question?.difficulty === "Advanced" && "🩸"}
+                                    </span>
+                                    {question?.difficulty}
+                                </div>
+                            </article>
+                            <article>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg>
+                                <p>+{xpLevels[question?.difficulty!]} XP</p>
+                            </article>
+                        </section>
 
-                            <h3>{question?.question}</h3>
+                        <h3>{question?.question}</h3>
 
-                            <section className={isSubmitted ? "answers submitted-container" : "answers"}>
-                                {
-                                    question?.answers.map((answer, i) => (
-                                        <Answer key={i} answer={answer} letter={letters[i]} selected={selectedAnswer} setSelected={setSelectedAnswer} index={i} correctIndex={correctAnswerIndex!} isSubmitted={isSubmitted} />
-                                    ))
-                                }
-                            </section>
-
+                        <section className={isSubmitted ? "answers submitted-container" : "answers"}>
                             {
-                                !isSubmitted ?
-                                    <button disabled={selectedAnswer === null} onClick={handleSubmit}>Submit Answer</button> :
-                                    <QuestionExplanation explanation={question?.explanation!} isCorrect={correctAnswerIndex === selectedAnswer} />
+                                question?.answers.map((answer, i) => (
+                                    <Answer key={i} answer={answer} letter={letters[i]} selected={selectedAnswer} setSelected={setSelectedAnswer} index={i} correctIndex={correctAnswerIndex!} isSubmitted={isSubmitted} />
+                                ))
                             }
-                        </article>
-                }
+                        </section>
 
-                <Countdown />
-            </main>
-        </>
+                        {
+                            !isSubmitted ?
+                                <button disabled={selectedAnswer === null} onClick={handleSubmit}>Submit Answer</button> :
+                                <QuestionExplanation explanation={question?.explanation!} isCorrect={correctAnswerIndex === selectedAnswer} />
+                        }
+                    </article>
+            }
+
+            <Countdown />
+        </main>
     );
 }
 

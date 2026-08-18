@@ -4,6 +4,7 @@
     align-items: center;
     gap: 1.25rem;
     font-family: var(--font-nunito);
+    text-align: center;
 
     svg {
         width: 7rem;

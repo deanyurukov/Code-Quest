@@ -10,6 +10,7 @@ import ProfileUserInfo from "../components/ProfileUserInfo.tsx";
 import ProfileUserStats from "../components/ProfileUserStats.tsx";
 import Spinner from "../components/Spinner.tsx";
 import ProfileUserDifficulty from "../components/ProfileUserDifficulty.tsx";
+import PageTitle from "../components/PageTitle.tsx";
 
 const ProfilePage = () => {
     const { user, streak, loading }: { user: User | null, streak: number, loading: boolean } = useOutletContext();
@@ -23,6 +24,8 @@ const ProfilePage = () => {
 
     return (
         <main id="profile-page">
+            <PageTitle title="Profile" />
+
             {
                 loading ? <Spinner /> :
                 <>
