@@ -139,7 +139,10 @@ const QuestionsPage = () => {
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"></path></svg>
                     </span>
                 </button>
-                <h2>Day {loading ? "..." : question?.dayNumber}</h2>
+                <div>
+                    <h2>Day {loading ? "..." : question?.dayNumber}</h2>
+                    <p>{ loading ? "date..." : new Date(question?.date!).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</p>
+                </div>
                 <button disabled={question?.nextExists === false || loading} onClick={() => getDiffQuestion(1)} >
                     <span>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"></path></svg>
