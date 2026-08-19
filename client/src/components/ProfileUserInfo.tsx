@@ -1,8 +1,32 @@
 import { Link } from "react-router-dom";
 import type { User } from "../types/User.ts";
 import type { LevelProgress } from "../types/LevelProgress.ts";
+import { useState } from "react";
+import { get } from "../api/requester.ts";
+import { endpoints } from "../api/endpoints.ts";
 
-const ProfileUserInfo = ({ user, levelProgress }: { user: User | null, levelProgress: LevelProgress | null }) => {
+const ProfileUserInfo = ({ user, levelProgress, getUserData }: { user: User | null, levelProgress: LevelProgress | null, getUserData: () => Promise<void> }) => {
+    const [loading, setLoading] = useState<boolean>(false);
+
+    async function logoutUser(e: any) {
+        e.preventDefault();
+
+        try {
+            if (confirm("Are you sure you want to log out?")) {
+                setLoading(true);
+                await get(endpoints.logout, { id: user?._id });
+                localStorage.removeItem("accessToken");
+                await getUserData();
+            }
+        }
+        catch (e) {
+            console.error(e);
+        }
+        finally {
+            setLoading(false);
+        }
+    }
+
     return (
         <article className="user-info">
             <section className="info">
@@ -61,11 +85,11 @@ const ProfileUserInfo = ({ user, levelProgress }: { user: User | null, levelProg
             {
                 user?.isVerified ?
                     <>
-                        {/* <hr />
-                        <button type="button">
+                        <hr />
+                        <button disabled={loading} type="button" onClick={logoutUser}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" x2="9" y1="12" y2="12"></line></svg>
-                            Log out
-                        </button> */}
+                            {loading ? "Logging out..." : "Log out"}
+                        </button>
                     </> :
                     <section className="create-account">
                         <article>

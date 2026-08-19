@@ -266,6 +266,22 @@
                 scale: 0.985;
             }
 
+            &:disabled {
+                background: rgb(245, 245, 240);
+                border: 1.5px solid rgb(229, 224, 216);
+                color: rgb(196, 186, 168);
+                cursor: not-allowed;
+                box-shadow: none;
+
+                &:hover {
+                    color: rgb(196, 186, 168);
+                }
+
+                &:active {
+                    scale: 1;
+                }
+            }
+
             svg {
                 width: 1rem;
                 height: 1rem;

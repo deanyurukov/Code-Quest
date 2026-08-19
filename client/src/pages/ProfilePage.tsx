@@ -13,7 +13,7 @@ import ProfileUserDifficulty from "../components/ProfileUserDifficulty.tsx";
 import PageTitle from "../components/PageTitle.tsx";
 
 const ProfilePage = () => {
-    const { user, streak, loading }: { user: User | null, streak: number, loading: boolean } = useOutletContext();
+    const { user, streak, loading, getUserData }: { user: User | null, streak: number, loading: boolean, getUserData: () => Promise<void> } = useOutletContext();
     const [levelProgress, setLevelProgress] = useState<LevelProgress | null>(null);
 
     useEffect(() => {
@@ -29,7 +29,7 @@ const ProfilePage = () => {
             {
                 loading ? <Spinner /> :
                 <>
-                    <ProfileUserInfo user={user} levelProgress={levelProgress} />
+                    <ProfileUserInfo user={user} levelProgress={levelProgress} getUserData={getUserData} />
                     <ProfileUserStats user={user} level={levelProgress?.currentLevel || 0} streak={streak} />
                     <ProfileUserDifficulty answers={user?.answers ?? null} />
                 </>

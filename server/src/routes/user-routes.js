@@ -32,15 +32,7 @@ router.get("/user", async (req, res) => {
 
 router.post("/user/anonymous", async (req, res) => {
     try {
-        let user = await User.findOne({
-            isVerified: false,
-            answers: { $size: 0 }
-        });
-
-        if (!user) {
-            user = await User.create({});
-        }
-
+        const user = await User.create({});
         res.status(201).json({ userId: user._id });
     }
     catch (e) {
@@ -159,6 +151,28 @@ router.post("/user/login", async (req, res) => {
     catch (e) {
         console.error(e);
         return res.status(400).json({ message: getErrorMessage(e) });
+    }
+});
+
+router.get("/user/logout", async (req, res) => {
+    try {
+        const { id } = req.query;
+
+        if (!id) {
+            return res.status(400).json({ error: "User id is required" });
+        }
+
+        const user = await User.findById(id);
+
+        if (!user) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        res.status(200).json({ message: "Logout Successful" });
+    }
+    catch (e) {
+        console.error(e);
+        res.status(500).json({ error: "Failed to get user" });
     }
 });
 
