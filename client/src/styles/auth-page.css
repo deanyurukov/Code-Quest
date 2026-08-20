@@ -12,7 +12,7 @@
         flex-direction: row;
         align-items: center;
         gap: 0.5rem;
-        color: rgb(180, 83, 9);
+        color: var(--color-button);
         font-weight: 700;
         font-size: 1rem;
         padding: 0;

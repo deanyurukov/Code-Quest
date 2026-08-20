@@ -131,7 +131,7 @@ const QuestionsPage = () => {
 
     return (
         <main id="questions-page">
-            <PageTitle title="Questions" />
+            <PageTitle title="Quest" />
 
             <article className="day">
                 <button disabled={question?.previousExists === false || loading} onClick={() => getDiffQuestion(-1)} >
