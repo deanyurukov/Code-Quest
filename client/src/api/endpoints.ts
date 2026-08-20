@@ -11,5 +11,6 @@ export const endpoints = {
     login: `${baseUrl}/user/login`,
     logout: `${baseUrl}/user/logout`,
     
-    ranks: `${baseUrl}/ranks`
+    ranks: `${baseUrl}/ranks`,
+    specificRank: (id: string) => `${baseUrl}/ranks/${id}`
 };

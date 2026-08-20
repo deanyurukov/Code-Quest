@@ -18,4 +18,30 @@ router.get("/ranks", async (req, res) => {
     }
 });
 
+router.get("/ranks/:id", async (req, res) => {
+    try {
+        const user = await User.findOne({
+            _id: req.params.id,
+            isVerified: true
+        }).select("xp");
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        const usersAhead = await User.countDocuments({
+            isVerified: true,
+            xp: { $gt: user.xp }
+        });
+
+        return res.status(200).json({
+            rank: usersAhead + 1
+        });
+    }
+    catch (e) {
+        console.error(e);
+        return res.sendStatus(500);
+    }
+});
+
 export default router;

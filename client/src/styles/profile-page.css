@@ -185,63 +185,6 @@
             }
         }
 
-        .create-account {
-            background: linear-gradient(135deg, rgb(254, 249, 238), rgb(254, 243, 199));
-            border-radius: var(--border-r);
-            border: 1px solid rgba(217, 119, 6, 0.19);
-            padding: 1.5rem;
-            display: flex;
-            align-items: start;
-            flex-direction: column;
-            gap: 1rem;
-            margin-top: 1rem;
-
-            article {
-                display: flex;
-                gap: 0.75rem;
-
-                svg {
-                    color: var(--color-button);
-                    flex-shrink: 0;
-                    width: 1.5rem;
-                    height: 1.5rem;
-                }
-
-                div {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 0.5rem;
-
-                    h5 {
-                        font-size: 1.3rem;
-                        font-weight: 900;
-                        line-height: 1.3rem;
-                    }
-                }
-            }
-
-            a {
-                align-self: stretch;
-                color: var(--color-white);
-                font-weight: 900;
-                font-size: 1rem;
-                border-radius: 999px;
-                padding: 1rem 0;
-                background: linear-gradient(135deg, rgb(180, 83, 9), rgb(217, 119, 6));
-                box-shadow: rgba(217, 119, 6, 0.35) 0px 4px 12px;
-                text-align: center;
-                transition: all 0.2s linear;
-
-                &:hover {
-                    scale: 1.015;
-                }
-
-                &:active {
-                    scale: 0.985;
-                }
-            }
-        }
-
         &>button {
             width: 100%;
             background: rgb(254, 249, 238);

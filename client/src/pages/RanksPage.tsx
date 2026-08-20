@@ -5,12 +5,18 @@ import type { User } from "../types/User.ts";
 import { get } from "../api/requester.ts";
 import { endpoints } from "../api/endpoints.ts";
 import Spinner from "../components/Spinner.tsx";
+import CreateAccount from "../components/CreateAccount.tsx";
 
 const RanksPage = () => {
     const { user }: { user: User | null } = useOutletContext();
     const [ranksData, setRanksData] = useState<{ username: string, xp: number }[] | null>(null);
-    const [userRank, setUserRank] = useState<number>(999);
+    const [userRank, setUserRank] = useState<number>(-1);
     const [loading, setLoading] = useState<boolean>(false);
+
+    async function getRankIfOutsideTop(): Promise<number> {
+        const rank: { rank: number } = await get(endpoints.specificRank(user?._id!));
+        return rank.rank;
+    }
 
     async function getRanksData() {
         try {
@@ -18,8 +24,14 @@ const RanksPage = () => {
             const data: { username: string, xp: number }[] = await get(endpoints.ranks);
             setRanksData(data);
 
-            const userRank = data.findIndex(u => u.username === user?.username);
-            setUserRank(userRank + 1);
+            let userRankToSet = data.findIndex(u => u.username === user?.username) + 1;
+
+            if (userRankToSet === 0 && user && user.isVerified) {
+                userRankToSet = await getRankIfOutsideTop();
+            }
+
+            console.log(userRankToSet);
+            setUserRank(userRankToSet);
         }
         catch (e) {
             console.error(e);
@@ -40,6 +52,11 @@ const RanksPage = () => {
     return (
         <main id="ranks-page">
             <PageTitle title="Ranks" />
+
+            {
+                !user?.isVerified &&
+                    <CreateAccount text="Appear in the ranks!" desc="Create an account to be able to appear in the ranks." linkText="Join the Battle, Warrior ⚔️" />
+            }
 
             <article>
                 <div className="section-heading">
@@ -90,6 +107,22 @@ const RanksPage = () => {
                             </span>
                         </div>
                     ))}
+
+                    {
+                        userRank > 20 &&
+                        <>
+                            <hr />
+                            <div className="you">
+                                <p>{userRank}</p>
+                                <h5>{user?.username} <span>You</span></h5>
+
+                                <span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg>
+                                    {user?.xp}
+                                </span>
+                            </div>
+                        </>
+                    }
                 </article>
             </section>
         </main>
