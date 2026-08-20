@@ -30,7 +30,6 @@ const RanksPage = () => {
                 userRankToSet = await getRankIfOutsideTop();
             }
 
-            console.log(userRankToSet);
             setUserRank(userRankToSet);
         }
         catch (e) {
