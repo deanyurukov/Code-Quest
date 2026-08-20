@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import questionRoutes from "./routes/question-routes.js";
 import userRoutes from "./routes/user-routes.js";
 import adminRoutes from "./routes/admin-routes.js";
+import rankRoutes from "./routes/rank-routes.js";
 
 const app = express();
 const allowedOrigins = ["https://code-quest-daily.vercel.app", "http://localhost:3000", "http://192.168.1.6:3000"];
@@ -57,6 +58,7 @@ app.use((req, res, next) => {
 app.use(questionRoutes);
 app.use(adminRoutes);
 app.use(userRoutes);
+app.use(rankRoutes);
 
 app.use((req, res) => {
     res.status(404).send("Route not found");

@@ -17,6 +17,7 @@ nav {
 
     @media (width<=380px) {
         font-size: 14px;
+        padding: 0.4rem 0.25rem;
     }
 
     article {
@@ -36,7 +37,12 @@ nav {
                 color: var(--color-white);
             }
         }
-        
+
+        @media (width<=380px) {
+            gap: 0.3rem;
+            padding: 0.6rem 1rem;
+        }
+
         svg,
         a {
             color: var(--color-gray);
